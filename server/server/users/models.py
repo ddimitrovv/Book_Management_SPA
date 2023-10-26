@@ -1,7 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 from custom.custom_choices import Gender
 
@@ -76,6 +76,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(
         validators=(
             MinLengthValidator(FIRST_NAME_MIN_LEN),
+            MaxLengthValidator(FIRST_NAME_MAX_LEN),
         ),
         max_length=FIRST_NAME_MAX_LEN,
         null=True,
@@ -85,6 +86,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(
         validators=(
             MinLengthValidator(LAST_NAME_MIN_LEN),
+            MaxLengthValidator(LAST_NAME_MAX_LEN),
         ),
         max_length=LAST_NAME_MAX_LEN,
         null=True,
