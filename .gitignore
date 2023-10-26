@@ -1,0 +1,48 @@
+# Ignore Python-specific files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment
+venv/
+env/
+*.pyc
+*.pyo
+__pycache__/
+*.pyc
+
+# Ignore database files
+*.sqlite
+
+# Ignore Node.js modules
+node_modules/
+
+# Ignore logs and generated files
+*.log
+*.log.*
+*.tmp
+*.tmp.*
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore .env files that may contain sensitive data
+.env
+
+# Ignore IDE-specific settings (VS Code)
+.vscode/
+
+# Ignore development files
+db.sqlite
+
+# Ignore compiled JavaScript files (React)
+/build/
+/dist/
+/.next/
+/out/
+
+# Ignore Uvicorn and Vine-specific files
+__pycache__/
+logs/
