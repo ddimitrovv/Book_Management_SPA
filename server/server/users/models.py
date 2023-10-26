@@ -3,7 +3,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.core.validators import MinLengthValidator
 
-from custom.custom_functions import Gender
+from custom.custom_choices import Gender
 
 
 class CustomUserManager(BaseUserManager):
