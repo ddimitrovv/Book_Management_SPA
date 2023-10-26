@@ -37,12 +37,11 @@ node_modules/
 # Ignore development files
 db.sqlite
 
-# Ignore compiled JavaScript files (React)
+# Ignore compiled JavaScript files (React and Vite)
 /build/
 /dist/
-/.next/
-/out/
+/.vite/
 
-# Ignore Uvicorn and Vine-specific files
+# Ignore Uvicorn-specific files
 __pycache__/
 logs/
