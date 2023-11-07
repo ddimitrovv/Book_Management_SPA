@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-from custom.custom_choices import BookStatysChoices
+from server.books.choices import BookStatusChoices
 from server.users.models import UserProfile
 
 
@@ -37,7 +37,7 @@ class Book(models.Model):
     )
 
     status = models.TextField(
-        choices=BookStatysChoices.choices
+        choices=BookStatusChoices.choices
     )
 
     price = models.PositiveIntegerField(

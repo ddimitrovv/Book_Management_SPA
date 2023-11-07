@@ -3,19 +3,19 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
-from custom.custom_choices import Gender
+from server.users.choices import Gender
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, password=None, is_staff=False, is_superuser=False):
+    def create_user(self, username, email, password=None, is_staff=False, is_superuser=False):
         if not username:
             raise ValueError("The Username field must be set.")
-        user = self.model(username=username, is_staff=is_staff, is_superuser=is_superuser)
+        user = self.model(username=username, email=email, is_staff=is_staff, is_superuser=is_superuser)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password=None, **extra_fields):
+    def create_superuser(self, username, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -24,7 +24,7 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self.create_user(username, password, **extra_fields)
+        return self.create_user(username, email, password, **extra_fields)
 
 
 class CustomUser(PermissionsMixin, AbstractBaseUser):
