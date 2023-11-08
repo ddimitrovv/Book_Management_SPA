@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import TokenAuthentication
@@ -10,6 +11,7 @@ from server.users.operations import get_user_profile
 from server.users.serializers import CustomUserSerializer, UserProfileSerializer
 
 
+@csrf_exempt
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def home_view(request):
@@ -19,8 +21,8 @@ def home_view(request):
         books = get_all_books_by_user(user=user)
     else:
         user = None
-        books = None
         user_profile = None
+        books = None
 
     user_data = CustomUserSerializer(user).data if user else None
     user_profile_data = UserProfileSerializer(user_profile).data if user_profile else None
