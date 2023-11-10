@@ -50,3 +50,6 @@ class Book(models.Model):
         on_delete=models.CASCADE,
         related_name='books',
     )
+
+    def __str__(self):
+        return f"{self.name} by {self.author}"

@@ -17,6 +17,14 @@ def get_user(*, pk: int = None, username: str = None, email: str = None) -> Cust
         return None  # User not found
 
 
+def get_user_profile_by_id(pk: int):
+    try:
+        user = CustomUser.objects.get(pk=pk)
+        return user
+    except CustomUser.DoesNotExist:
+        return None  # User not found
+
+
 def get_user_object(request):
     from server.users.models import CustomUser
     username = request.user.username

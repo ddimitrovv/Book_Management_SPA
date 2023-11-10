@@ -7,3 +7,4 @@ psycopg2-binary==2.9.9
 pytz==2023.3.post1
 sqlparse==0.4.4
 typing_extensions==4.8.0
+python-dotenv=1.0.0

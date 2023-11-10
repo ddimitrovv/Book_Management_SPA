@@ -111,4 +111,3 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'Username: {CustomUser.objects.get(id=self.pk)}'
-
