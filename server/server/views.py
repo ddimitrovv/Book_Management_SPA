@@ -11,7 +11,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 
 from server.books.operations import get_all_books_by_user
 from server.books.serializers import BookSerializer
-from server.users.operations import get_user_profile
+from server.users.operations import get_user_profile, get_user_object
 from server.users.serializers import CustomUserSerializer, UserProfileSerializer
 from server.users.models import CustomUser
 from server.users.serializers import UserRegistrationSerializer, UserLoginSerializer
@@ -78,6 +78,10 @@ def user_registration(request):
 @api_view(['POST'])
 def user_login(request):
     if request.method == 'POST':
+        user = get_user_object(request)
+        if not user:
+            return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
+
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             username = serializer.validated_data['username']

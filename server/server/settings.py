@@ -170,3 +170,5 @@ CACHES = {
         },
     }
 }
+
+BASE_URL = os.getenv('BASE_URL')

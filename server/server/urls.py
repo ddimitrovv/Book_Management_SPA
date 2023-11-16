@@ -12,7 +12,8 @@ urlpatterns = [
     path('login/', user_login, name='user_login'),
     path('logout/', user_logout, name='user_logout'),
     path('', home_view, name='home'),
-    path('<int:user_id>/', include('server.users.urls'))
+    path('users/', include('server.users.urls')),
+    path('books/', include('server.books.urls')),
 ]
 
 # Serve media files during development

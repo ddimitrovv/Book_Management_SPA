@@ -49,7 +49,23 @@ class CustomUser(PermissionsMixin, AbstractBaseUser):
         default=False,
     )
 
-    is_superuser = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(
+        default=False
+    )
+
+    confirmation_token = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
+
+    is_email_confirmed = models.BooleanField(
+        default=False
+    )
+
+    is_deleted = models.BooleanField(
+        default=False
+    )
 
     USERNAME_FIELD = 'username'
 
