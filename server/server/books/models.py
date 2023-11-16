@@ -8,6 +8,10 @@ from server.users.models import UserProfile
 class Book(models.Model):
     NAME_MAX_LEN = 150
     AUTHOR_MAX_LEN = 50
+    RATING_MIN_VALUE = 1
+    RATING_MAX_VALUE = 5
+    PRICE_MAX_DIGITS = 4
+    PRICE_DECIMAL_PLACES = 2
 
     name = models.CharField(
         max_length=NAME_MAX_LEN
@@ -29,8 +33,8 @@ class Book(models.Model):
 
     rating = models.PositiveIntegerField(
         validators=(
-            MinValueValidator(1),
-            MaxValueValidator(5)
+            MinValueValidator(RATING_MIN_VALUE),
+            MaxValueValidator(RATING_MAX_VALUE)
         ),
         blank=True,
         null=True
@@ -40,7 +44,9 @@ class Book(models.Model):
         choices=BookStatusChoices.choices
     )
 
-    price = models.PositiveIntegerField(
+    price = models.DecimalField(
+        max_digits=PRICE_MAX_DIGITS,
+        decimal_places=PRICE_DECIMAL_PLACES,
         blank=True,
         null=True
     )

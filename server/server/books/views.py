@@ -3,13 +3,15 @@ from django.db.models import Count
 from django.views.decorators.http import require_POST
 
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 
 from server.books.models import Book
 from server.books.operations import get_book, get_all_books_by_user
+from server.books.permissions import IsOwner
 from server.books.serializers import BookCreateSerializer, BookSerializer
 from server.users.operations import get_user_profile
 
@@ -19,7 +21,7 @@ from server.users.operations import get_user_profile
 @permission_classes([IsAuthenticated])
 @require_POST
 @login_required
-def create_book(request, user_pk):
+def create_book(request):
     if request.method == 'POST':
         request.data['owner'] = get_user_profile(request).pk
         serializer = BookCreateSerializer(data=request.data, context={'request': request})
@@ -49,10 +51,10 @@ def details_book(request, book_pk):
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 @login_required
-def all_books_by_category(request, user_id):
+def all_books_by_category(request):
     user = request.user
 
-    if user.is_authenticated and user_id == user.pk:
+    if user.is_authenticated:
         books = get_all_books_by_user(user)
         # Grouping books by status
         books_by_status = books.values('status').annotate(total=Count('status'))
@@ -69,3 +71,24 @@ def all_books_by_category(request, user_id):
 
         return Response(response_data, status=status.HTTP_200_OK)
     return Response({'detail': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
+
+
+class BookUpdateView(RetrieveUpdateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated, IsOwner]
+
+    def patch(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+
+class BookDeleteView(generics.DestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated, IsOwner]
+    lookup_field = 'id'

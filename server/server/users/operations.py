@@ -25,11 +25,23 @@ def get_user_profile_by_id(pk: int):
         return None  # User not found
 
 
+def check_if_user_exists(request):
+    from server.users.models import CustomUser
+    username = request.data['username']
+    try:
+        user = CustomUser.objects.filter(username__exact=username, is_deleted=False).first()
+        if user is None:
+            raise CustomUser.DoesNotExist
+        return user
+    except CustomUser.DoesNotExist:
+        return None
+
+
 def get_user_object(request):
     from server.users.models import CustomUser
     username = request.user.username
     try:
-        user = CustomUser.objects.filter(username=username, is_deleted=False).first()
+        user = CustomUser.objects.filter(username__exact=username, is_deleted=False).first()
         if user is None:
             raise CustomUser.DoesNotExist
         return user
