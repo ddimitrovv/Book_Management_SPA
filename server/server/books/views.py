@@ -64,7 +64,6 @@ class AllBooksByCategory(APIView):
                 response_data['books'][stat] = serialized_books
 
             return Response(response_data, status=status.HTTP_200_OK)
-        return Response({'detail': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
 
 
 class BookUpdateView(RetrieveUpdateAPIView):
@@ -89,3 +88,8 @@ class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     lookup_field = 'id'
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({'detail': 'Book deleted successfully'}, status=status.HTTP_204_NO_CONTENT)

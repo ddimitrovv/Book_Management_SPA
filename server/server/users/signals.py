@@ -34,7 +34,7 @@ def send_registration_email(sender, instance, created, **kwargs):
 
         subject = 'Welcome to Your App'
         message = (f'Thank you for registering!\n\n Please click the link below to confirm your email:'
-                   f'\n{settings.BASE_URL}/confirm-email/{confirmation_token}/')
+                   f'\n{settings.BASE_URL}/users/confirm-email/{confirmation_token}/')
         from_email = 'your_email@gmail.com'
         recipient_list = [instance.email]
         send_registration_email_async.delay(subject, message, from_email, recipient_list)

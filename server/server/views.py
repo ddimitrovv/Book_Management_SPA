@@ -4,8 +4,7 @@ from django.http import JsonResponse
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 from server.books.operations import get_all_books_by_user
@@ -16,28 +15,35 @@ from server.users.serializers import UserRegistrationSerializer, UserLoginSerial
 
 
 class HomeView(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
+    permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        user_profile = get_user_profile(request)
-        books = get_all_books_by_user(user=user)
+        if user.is_anonymous:
+            data = {
+                'user': None,
+                'user_profile': None,
+                'books': None,
+            }
+        else:
+            user_profile = get_user_profile(request)
+            books = get_all_books_by_user(user=user)
 
-        user_data = CustomUserSerializer(user).data if user else None
-        user_profile_data = UserProfileSerializer(user_profile).data if user_profile else None
-        books_data = {book.pk: BookSerializer(book).data for book in books} if books else None
+            user_data = CustomUserSerializer(user).data if user else None
+            user_profile_data = UserProfileSerializer(user_profile).data if user_profile else None
+            books_data = {book.pk: BookSerializer(book).data for book in books} if books else None
 
-        data = {
-            'user': user_data,
-            'user_profile': user_profile_data,
-            'books': books_data,
-        }
+            data = {
+                'user': user_data,
+                'user_profile': user_profile_data,
+                'books': books_data,
+            }
 
         return Response(data)
 
 
 class UserRegistrationView(APIView):
+
     def post(self, request, *args, **kwargs):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
@@ -77,11 +83,10 @@ class UserLoginView(APIView):
 
 
 class UserLogoutView(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
+            request.auth.delete()
             logout(request)
             return JsonResponse({'detail': 'User logged out successfully'}, status=200)
         else:

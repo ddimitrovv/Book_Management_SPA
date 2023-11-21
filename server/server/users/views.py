@@ -2,8 +2,6 @@ from django.http import HttpResponse
 
 from rest_framework import status, generics
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 
 from server.users.models import UserProfile
@@ -12,8 +10,6 @@ from server.users.serializers import CustomUserSerializer, UserProfileSerializer
 
 
 class UserDetails(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         user = get_user_object(request)
@@ -30,7 +26,6 @@ class UserDetails(APIView):
                 },
                 status=status.HTTP_200_OK
             )
-        return Response({'detail': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
 
 
 def confirm_email(request, token):
@@ -42,8 +37,6 @@ def confirm_email(request, token):
 
 
 class UserProfileUpdateAPIView(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
 
     def patch(self, request, *args, **kwargs):
 
@@ -64,13 +57,10 @@ class UserProfileUpdateAPIView(APIView):
                 )
             return Response({'detail': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'detail': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
-
 
 class UserProfileDeleteView(generics.DestroyAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
 
     def delete(self, request, *args, **kwargs):
         user = get_user_object(request)
