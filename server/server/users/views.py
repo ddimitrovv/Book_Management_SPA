@@ -1,11 +1,9 @@
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from rest_framework import status, generics
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 
 from server.users.models import UserProfile
@@ -13,26 +11,26 @@ from server.users.operations import get_user_profile, confirm_email_by_token, ge
 from server.users.serializers import CustomUserSerializer, UserProfileSerializer, UserProfileUpdateSerializer
 
 
-@api_view(['GET'])
-@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-@login_required
-def user_details(request):
-    user = get_user_object(request)
-    if not user:
-        return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
+class UserDetails(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
-    if user.is_authenticated:
-        user_profile = get_user_profile(request)
+    def get(self, request, *args, **kwargs):
+        user = get_user_object(request)
+        if not user:
+            return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        return Response(
-            {
+        if user.is_authenticated:
+            user_profile = get_user_profile(request)
+
+            return Response(
+                {
                     'user': CustomUserSerializer(user).data,
                     'user_profile': UserProfileSerializer(user_profile).data
-            },
-            status=status.HTTP_200_OK
-        )
-    return Response({'detail': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
+                },
+                status=status.HTTP_200_OK
+            )
+        return Response({'detail': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
 
 
 def confirm_email(request, token):
@@ -44,7 +42,8 @@ def confirm_email(request, token):
 
 
 class UserProfileUpdateAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def patch(self, request, *args, **kwargs):
 

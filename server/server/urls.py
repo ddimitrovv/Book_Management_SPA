@@ -4,14 +4,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from server.views import home_view, user_registration, user_logout, user_login
+from server.views import HomeView, UserRegistrationView, UserLogoutView, UserLoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', user_registration, name='user_registration'),
-    path('login/', user_login, name='user_login'),
-    path('logout/', user_logout, name='user_logout'),
-    path('', home_view, name='home'),
+    path('register/', UserRegistrationView.as_view(), name='user_registration'),
+    path('login/', UserLoginView.as_view(), name='user_login'),
+    path('logout/', UserLogoutView.as_view(), name='user_logout'),
+    path('', HomeView.as_view(), name='home'),
     path('users/', include('server.users.urls')),
     path('books/', include('server.books.urls')),
 ]
