@@ -15,9 +15,29 @@ from server.users.serializers import UserRegistrationSerializer, UserLoginSerial
 
 
 class HomeView(APIView):
+    """
+    Home View
+
+    If the user is logged in, this view returns detailed information including
+    the user's profile and their books. If the user is not logged in, it returns None.
+
+    Attributes:
+    - permission_classes (tuple): A tuple containing the permission classes for the view.
+    """
+
     permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
+        """
+        Retrieve user data, user profile, and books.
+
+        Parameters:
+        - request (Request): The HTTP request object.
+
+        Returns:
+        - Response: A response containing user, user profile, and books data.
+        """
+
         user = request.user
         if user.is_anonymous:
             data = {
@@ -43,8 +63,29 @@ class HomeView(APIView):
 
 
 class UserRegistrationView(APIView):
+    """
+    User Registration View
+
+    Allows users to register by providing a valid set of registration data.
+
+    Methods:
+    - post: Handle the registration process when a POST request is received.
+
+    Attributes:
+    - permission_classes (tuple): A tuple containing the permission classes for the view.
+    """
 
     def post(self, request, *args, **kwargs):
+        """
+        Register a new user.
+
+        Parameters:
+        - request (Request): The HTTP request object.
+
+        Returns:
+        - JsonResponse: A JSON response indicating the result of user registration.
+        """
+
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
@@ -54,9 +95,31 @@ class UserRegistrationView(APIView):
 
 
 class UserLoginView(APIView):
+    """
+    User Login View
+
+    Allows users to log in by providing valid login credentials.
+
+    Methods:
+    - post: Handle the login process when a POST request is received.
+
+    Attributes:
+    - permission_classes (tuple): A tuple containing the permission classes for the view.
+    """
+
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, *args, **kwargs):
+        """
+        Log in a user.
+
+        Parameters:
+        - request (Request): The HTTP request object.
+
+        Returns:
+        - Response: A response containing user data and token upon successful login.
+        """
+
         user = check_if_user_exists(request)
         if user is None:
             return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
@@ -68,10 +131,11 @@ class UserLoginView(APIView):
 
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                login(request, user)  # Log in the user
+                """Log in the user"""
+                login(request, user)
                 token, _ = Token.objects.get_or_create(user=user)
 
-                # Return both user data and token
+                """Return user and token"""
                 return Response(
                     {'user': CustomUserSerializer(user).data, 'token': token.key},
                     status=status.HTTP_200_OK
@@ -83,8 +147,26 @@ class UserLoginView(APIView):
 
 
 class UserLogoutView(APIView):
+    """
+    User Logout View
+
+    Allows authenticated users to log out.
+
+    Methods:
+    - post: Handle the logout process when a POST request is received.
+    """
 
     def post(self, request, *args, **kwargs):
+        """
+        Log out a user.
+
+        Parameters:
+        - request (Request): The HTTP request object.
+
+        Returns:
+        - JsonResponse: A JSON response indicating the result of user logout.
+        """
+
         if request.user.is_authenticated:
             request.auth.delete()
             logout(request)

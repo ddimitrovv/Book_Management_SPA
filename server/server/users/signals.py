@@ -12,23 +12,50 @@ from .tasks import send_registration_email_async
 
 @receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance, created, **kwargs):
+    """
+    Signal handler to create a user profile when a CustomUser is created.
+
+    :param sender: The sender of the signal.
+    :param instance: The instance of the CustomUser model.
+    :param created: A boolean indicating whether the instance was created.
+    :param kwargs: Additional keyword arguments.
+    """
+
     if created:
         UserProfile.objects.create(user=instance)
 
 
 @receiver(post_save, sender=CustomUser)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
+    """
+    Signal handler to create an authentication token when a CustomUser is created.
+
+    :param sender: The sender of the signal.
+    :param instance: The instance of the CustomUser model.
+    :param created: A boolean indicating whether the instance was created.
+    :param kwargs: Additional keyword arguments.
+    """
+
     if created:
         Token.objects.create(user=instance)
 
 
 @receiver(post_save, sender=CustomUser)
 def send_registration_email(sender, instance, created, **kwargs):
+    """
+    Signal handler to send a registration email when a CustomUser is created.
+
+    :param sender: The sender of the signal.
+    :param instance: The instance of the CustomUser model.
+    :param created: A boolean indicating whether the instance was created.
+    :param kwargs: Additional keyword arguments.
+    """
+
     if created:
-        # Generate a unique confirmation token
+        """Generate a unique confirmation token"""
         confirmation_token = secrets.token_urlsafe(30)
 
-        # Save the token in the user model
+        """Save the token in the user model"""
         instance.confirmation_token = confirmation_token
         instance.save()
 

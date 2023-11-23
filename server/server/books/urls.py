@@ -1,3 +1,4 @@
+"""Books urls"""
 from django.urls import path
 
 from server.books.views import CreateBook, DetailsBook, AllBooksByCategory, BookDeleteView, BookUpdateView

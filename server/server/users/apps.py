@@ -6,4 +6,7 @@ class UsersConfig(AppConfig):
     name = 'server.users'
 
     def ready(self):
+        """
+        Method called when the app is ready. Imports signals from users.
+        """
         import server.users.signals
