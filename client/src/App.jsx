@@ -1,14 +1,28 @@
-import { useState } from 'react'
-import NavigationSection from './components/NavigationSection'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+import Login from './components/Login';
+import Navigation from './components/Navigation';
+import Logout from './components/Logout';
+import { AuthProvider } from './components/AuthProvider';
+import paths from './appPaths/paths'; 
 
+const App = () => {
   return (
-    <>
-      <NavigationSection />
-    </>
-  )
-}
 
-export default App
+      <div>
+        <AuthProvider>
+          <Navigation />
+          <Routes>
+
+            <Route path={paths.Login} element={<Login />} />
+            <Route path={paths.Logout} element={<Logout />} />
+
+          </Routes>
+        </AuthProvider>
+      </div>
+
+  );
+};
+
+export default App;
