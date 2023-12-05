@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
+from server.books.choices import BookStatusChoices
 from server.books.operations import get_all_books_by_user
 from server.books.serializers import BookSerializer
 from server.users.operations import get_user_profile, check_if_user_exists
@@ -35,7 +36,7 @@ class HomeView(APIView):
         - request (Request): The HTTP request object.
 
         Returns:
-        - Response: A response containing user, user profile, and books data.
+        - Response: A response containing user, user profile, and books collections types.
         """
 
         user = request.user
@@ -43,20 +44,18 @@ class HomeView(APIView):
             data = {
                 'user': None,
                 'user_profile': None,
-                'books': None,
+                'status': BookStatusChoices.choices,
             }
         else:
             user_profile = get_user_profile(request)
-            books = get_all_books_by_user(user=user)
 
             user_data = CustomUserSerializer(user).data if user else None
             user_profile_data = UserProfileSerializer(user_profile).data if user_profile else None
-            books_data = {book.pk: BookSerializer(book).data for book in books} if books else None
 
             data = {
                 'user': user_data,
                 'user_profile': user_profile_data,
-                'books': books_data,
+                'status': BookStatusChoices.choices,
             }
 
         return Response(data)
@@ -107,7 +106,7 @@ class UserLoginView(APIView):
     - permission_classes (tuple): A tuple containing the permission classes for the view.
     """
 
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         """
@@ -153,10 +152,10 @@ class UserLogoutView(APIView):
     Allows authenticated users to log out.
 
     Methods:
-    - post: Handle the logout process when a POST request is received.
+    - get: Handle the logout process when a GET request is received.
     """
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         """
         Log out a user.
 

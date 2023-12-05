@@ -47,7 +47,7 @@ const AuthProvider = ({ children }) => {
       const authToken = localStorage.getItem('authToken');
 
       const response = await fetch(urls.Logout, {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Token ${authToken}`,
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }) => {
       localStorage.removeItem('username')
 
       setIsAuthenticated(false);
-      navigate(paths.Login);
+      navigate(paths.Home);
 
     } catch (error) {
       console.error('Logout error:', error.message);

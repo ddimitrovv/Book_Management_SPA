@@ -1,0 +1,12 @@
+.navigation {
+    display: flex;
+    padding: 20px;
+
+}
+
+.nav-links {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

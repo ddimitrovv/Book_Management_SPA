@@ -1,6 +1,5 @@
-from django.db.models import Count
-
 from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
@@ -8,7 +7,7 @@ from rest_framework import status, generics
 from rest_framework.views import APIView
 
 from server.books.models import Book
-from server.books.operations import get_book, get_all_books_by_user
+from server.books.operations import get_book
 from server.books.permissions import IsOwner
 from server.books.serializers import BookCreateSerializer, BookSerializer
 from server.users.operations import get_user_profile
@@ -87,6 +86,12 @@ class DetailsBook(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
+class BooksByStatusPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+
 class AllBooksByCategory(APIView):
     """
     API view to retrieve all books grouped by their status for the authenticated user.
@@ -99,38 +104,35 @@ class AllBooksByCategory(APIView):
 
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+    pagination_class = BooksByStatusPagination
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, book_status, *args, **kwargs):
         """
-        Handles HTTP GET requests to retrieve all books grouped by status.
+        Handles HTTP GET requests to retrieve all books by a certain status.
 
         Parameters:
         - request: The HTTP request object.
+        - book_status: The status of the books to retrieve.
         - *args: Additional positional arguments.
         - **kwargs: Additional keyword arguments.
 
         Returns:
-        - Response: Serialized data containing books grouped by status.
+        - Response: Serialized data containing books by status with pagination.
         """
 
         user = request.user
 
         if user.is_authenticated:
-            books = get_all_books_by_user(user)
-            """Grouping books by status"""
-            books_by_status = books.values('status').annotate(total=Count('status'))
+            books = Book.objects.filter(owner=user.pk, status=book_status)
 
-            """To fetch the result as a dictionary with status as keys and a list of books as values"""
-            book_status_dict = {stat['status']: list(Book.objects.filter(owner=user.pk, status=stat['status'])) for stat
-                                in books_by_status}
-            response_data = {'books': {}}
+            paginator = BooksByStatusPagination()
+            result_page = paginator.paginate_queryset(books, request)
 
-            """Serializing books for each status and organizing them in the response data"""
-            for stat, books in book_status_dict.items():
-                serialized_books = BookSerializer(books, many=True).data
-                response_data['books'][stat] = serialized_books
+            serialized_books = BookSerializer(result_page, many=True).data
 
-            return Response(response_data, status=status.HTTP_200_OK)
+            return paginator.get_paginated_response(serialized_books)
+        else:
+            return Response({'detail': 'User not authenticated'}, status=book_status.HTTP_401_UNAUTHORIZED)
 
 
 class BookUpdateView(RetrieveUpdateAPIView):

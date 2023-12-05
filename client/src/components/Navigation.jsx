@@ -7,8 +7,8 @@ const Navigation = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <nav>
-      <ul role='list'>
+    <nav className='navigation'>
+      <ul role='list' className='nav-links'>
         {!isAuthenticated ? (
           <li>
             <Link to={paths.Login}>Login</Link>
@@ -17,6 +17,8 @@ const Navigation = () => {
           <>
             <li>
               <p>Wellcome, {localStorage.getItem('username')}</p>
+            </li>
+            <li>
               <Link to={paths.Home}>Home</Link>
             </li>
             <li>
