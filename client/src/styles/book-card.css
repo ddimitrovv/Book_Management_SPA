@@ -66,3 +66,7 @@
     line-height: 1.5em;
     text-align: center;
 }
+
+.book-card .profile-picture img {
+    border-radius: 0 50% 0 50%;
+}
