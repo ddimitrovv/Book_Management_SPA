@@ -123,13 +123,12 @@ class AllBooksByCategory(APIView):
         user = request.user
 
         if user.is_authenticated:
-            books = Book.objects.filter(owner=user.pk, status=book_status)
+            books = Book.objects.filter(owner=user.userprofile.pk, status=book_status)
 
             paginator = BooksByStatusPagination()
             result_page = paginator.paginate_queryset(books, request)
 
             serialized_books = BookSerializer(result_page, many=True).data
-
             return paginator.get_paginated_response(serialized_books)
         else:
             return Response({'detail': 'User not authenticated'}, status=book_status.HTTP_401_UNAUTHORIZED)

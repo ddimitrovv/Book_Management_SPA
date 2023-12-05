@@ -1,15 +1,13 @@
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse
 
-from rest_framework import status, permissions
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 from server.books.choices import BookStatusChoices
-from server.books.operations import get_all_books_by_user
-from server.books.serializers import BookSerializer
 from server.users.operations import get_user_profile, check_if_user_exists
 from server.users.serializers import CustomUserSerializer, UserProfileSerializer
 from server.users.serializers import UserRegistrationSerializer, UserLoginSerializer
@@ -89,7 +87,11 @@ class UserRegistrationView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             login(request, user)
-            return JsonResponse({'message': 'User registered successfully'}, status=201)
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response(
+                {'user': CustomUserSerializer(user).data, 'token': token.key},
+                status=status.HTTP_201_CREATED
+            )
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
