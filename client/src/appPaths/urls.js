@@ -4,7 +4,9 @@ const urls = {
     Home: baseUrl,
     Login: `${baseUrl}login/`,
     Logout: `${baseUrl}logout/`,
-    Books: `${baseUrl}books/`
+    Register: `${baseUrl}register/`,
+    BooksByStatus: (status) => `${baseUrl}books/${status}/`,
+    BookDetail: (id) => `/books/${id}`,
   };
   
   export default urls;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 import urls from '../appPaths/urls';
+import paths from '../appPaths/paths';
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
@@ -28,8 +29,6 @@ export default function Home() {
         })
         .then(responseData => {
           setData(responseData);
-          console.log('data:');
-          console.log(responseData);
         })
         .catch(error => {
           console.error('Error fetching data:', error.message);
@@ -66,7 +65,7 @@ const Card = ({ status }) => {
         </div>
         <div className="book-card-wrapper">
           <div className="book-card-info">
-            <Link to={`${urls.Books}${statusValue}/`}>
+            <Link to={paths.BooksByStatus(statusValue)}>
               <h2>{statusValue}</h2>
             </Link>
           </div>

@@ -34,9 +34,35 @@
 
 .book-card-info {
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .book-card-info a {
     text-decoration: none;
     color: red;
+}
+
+.book-card-info button {
+    background-color: red;
+    color: black;
+}
+
+.book-card-info button a {
+    color: black;
+}
+
+.book-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.book-title {
+    max-height: 3em;
+    min-height: 3em;
+    line-height: 1.5em;
+    text-align: center;
 }

@@ -70,8 +70,38 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (username, email, password, navigate) => {
+    try {
+      const response = await fetch(urls.Register, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.log(data);
+        throw new Error('Registration failed');
+      }
+
+      const data = await response.json();
+      const authToken = data.token;
+
+      localStorage.setItem('authToken', authToken);
+      localStorage.setItem('authState', JSON.stringify(true));
+      localStorage.setItem('username', username);
+
+      setIsAuthenticated(true);
+      navigate(paths.Home);
+    } catch (error) {
+      console.error('Registration error:', error.message);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

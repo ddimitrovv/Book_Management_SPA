@@ -10,9 +10,14 @@ const Navigation = () => {
     <nav className='navigation'>
       <ul role='list' className='nav-links'>
         {!isAuthenticated ? (
-          <li>
+          <>
+            <li>
             <Link to={paths.Login}>Login</Link>
-          </li>
+            </li>
+            <li>
+              <Link to={paths.Register}>Register</Link>
+            </li>
+          </>
         ) : (
           <>
             <li>
