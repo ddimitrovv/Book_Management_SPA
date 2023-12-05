@@ -16,7 +16,7 @@ const Navigation = () => {
         ) : (
           <>
             <li>
-              <p>Wellcome, {localStorage.getItem('username')}</p>
+              <p>Welcome, {localStorage.getItem('username')}</p>
             </li>
             <li>
               <Link to={paths.Home}>Home</Link>

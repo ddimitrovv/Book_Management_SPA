@@ -9,9 +9,11 @@ const Logout = () => {
   };
 
   return (
-    <div>
-      <h2>Are you sure you want to logout?</h2>
-      <button onClick={handleLogout}>Logout</button>
+    <div className='logout-form'>
+      <div className='form'>
+        <h2>Are you sure you want to logout?</h2>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
     </div>
   );
 };
