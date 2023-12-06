@@ -1,0 +1,12 @@
+body {
+    background-color: #8080804d;
+    height: 100dvh;
+}
+
+#root{
+    height: 100dvh;
+}
+
+#root > div {
+    height: 100dvh;
+}

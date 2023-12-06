@@ -5,6 +5,7 @@ const paths = {
     Register: '/register',
     BooksByStatus: (status) => `/books/${status}`,
     BookDetail: (id) => `/books/${id}`,
+    UserDetails: `/users`,
   };
   
   export default paths;

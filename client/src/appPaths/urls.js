@@ -7,6 +7,7 @@ const urls = {
     Register: `${baseUrl}register/`,
     BooksByStatus: (status) => `${baseUrl}books/${status}/`,
     BookDetail: (id) => `/books/${id}`,
+    UserDetails: `${baseUrl}/users/`,
   };
   
   export default urls;

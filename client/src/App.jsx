@@ -10,6 +10,7 @@ import Home from './components/Home';
 import BookListByStatus from './components/BookListByStatus';
 import BookDetails from './components/BookDetails';
 import Register from './components/Register';
+import UserDetails from './components/UserDetails';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route path={paths.Logout} element={<Logout />} />
             <Route path={paths.BooksByStatus(':status')} element={<BookListByStatus />} />
             <Route path={paths.BookDetail(':id')} element={<BookDetails />} />
+            <Route path={paths.UserDetails} element={<UserDetails />} />
 
           </Routes>
         </AuthProvider>

@@ -65,9 +65,11 @@ const Card = ({ status }) => {
         </div>
         <div className="book-card-wrapper">
           <div className="book-card-info">
-            <Link to={paths.BooksByStatus(statusValue)}>
-              <h2>{statusValue}</h2>
-            </Link>
+            <button className='books-status-button'>
+              <Link to={paths.BooksByStatus(statusValue)}>
+                <h2>{statusValue}</h2>
+              </Link>
+            </button>
           </div>
         </div>
       </div>

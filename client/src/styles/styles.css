@@ -1,6 +1,5 @@
 @import 'reset.css';
+@import 'main.css';
 @import 'navigation.css';
-@import 'login-form.css';
-@import 'logout-form.css';
-@import 'register-form.css';
-@import 'book-card.css';
+@import 'form.css';
+@import 'card.css';

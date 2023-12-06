@@ -1,7 +1,8 @@
 .navigation {
     display: flex;
     padding: 20px;
-
+    background-color: #4b4b4b4d;
+    height: 3rem;
 }
 
 .nav-links {
@@ -9,4 +10,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.nav-links li,
+.nav-links li a {
+    color: #F85800;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.nav-links li a {
+    flex: 1;
+    text-align: center;
 }
