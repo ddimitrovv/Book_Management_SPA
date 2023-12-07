@@ -38,16 +38,22 @@ const UserDetails = () => {
                 <img src="https://via.placeholder.com/200" alt="Book Cover" />
                 )}
             </div>
-            <div className="book-card-wrapper">
-                <div className="book-card-info">
+            <div className="book-card-info">
                 <p>First name: <span>{userDetails.user_profile.first_name}</span></p>
                 <p>Last name: <span>{userDetails.user_profile.last_name}</span></p>
                 <p>Gender: <span>{userDetails.user_profile.gender}</span></p>
                 <p>Username: <span>{userDetails.user.username}</span></p>
                 <p>Email: <span>{userDetails.user.email}</span></p>
-                {/* <button><Link to={`${paths.BookDetail(userDetails.user.id)}`}>View Details</Link></button> */}
-                </div>
             </div>
+            <div className='user-details-buttons'>
+                <button className='edit-user-button'>
+                    <Link to={{ pathname: paths.EditUser, state: { userDetails } }}>Edit</Link>
+                </button>
+                <button className='delete-user-button'>
+                    <Link to={`${paths.BookDetail(userDetails.user.id)}`}>Delete</Link>
+                </button>
+            </div>
+
         </div>
     </div>
   );
