@@ -81,7 +81,7 @@ class DetailsBook(APIView):
 
         book = get_book(book_pk)
         if book:
-            return Response(BookSerializer(book).data, status=status.HTTP_201_CREATED)
+            return Response(BookSerializer(book).data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
