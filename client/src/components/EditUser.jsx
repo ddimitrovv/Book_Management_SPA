@@ -4,14 +4,17 @@ import paths from '../appPaths/paths';
 import { useNavigate } from 'react-router-dom';
 
 const EditUser = () => {
+
   const navigate = useNavigate();
+
+  const authToken = localStorage.getItem('authToken');
+
   const [profilePicture, setProfilePicture] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
-  const authToken = localStorage.getItem('authToken');
 
   useEffect(() => {
     fetch(urls.UserDetails, {
@@ -111,12 +114,12 @@ const EditUser = () => {
                   />
                 </div>
                 <div>
-                  <label>Username:</label>
+                  <label htmlFor='username'>Username:</label>
                   <input
-                  type="text"
-                  name="username"
-                  value={username}
-                  disabled='true'
+                    type="text"
+                    name="username"
+                    value={username}
+                    disabled={true}
                   />
                 </div>
                 <div>
@@ -125,10 +128,10 @@ const EditUser = () => {
                     value={gender} 
                     onChange={(e) => setGender(e.target.value)}
                     >
-                      <option value="Female">Female</option>
-                      <option value="Male">Male</option>
-                      <option value="Other">Other</option>
-                    </select>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
                 <div>
                   <label>Email:</label>

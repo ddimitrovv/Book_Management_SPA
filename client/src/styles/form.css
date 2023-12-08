@@ -99,7 +99,16 @@ cursor: pointer;
 }
 
 .user-details-wrapper.add-book-form {
-  height: fit-content;
+  height: auto;
+}
+
+.user-details-wrapper.add-book-form .edit-user {
+  width: 80%;
+  margin: 20px;
+}
+
+.user-details-wrapper.add-book-form .form {
+  width: 100%;
 }
 
 .user-details-wrapper.add-book-form img {

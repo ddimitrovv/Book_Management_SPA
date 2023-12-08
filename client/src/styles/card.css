@@ -142,7 +142,7 @@
 }
 
 .edit-user-button {
-    background-color: green;
+    background-color: #808080f1;
 }
 
 .edit-user-button a {
@@ -168,6 +168,10 @@
 
 .book-card-info button {
     margin: 10px 0;
+}
+
+.book-card-info p {
+    font-size: 1.2rem;
 }
 
 .user-details {
