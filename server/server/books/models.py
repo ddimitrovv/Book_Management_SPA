@@ -46,7 +46,7 @@ class Book(models.Model):
         max_length=AUTHOR_MAX_LEN
     )
 
-    picture = models.ImageField(
+    picture = models.URLField(
         null=True,
         blank=True,
     )
