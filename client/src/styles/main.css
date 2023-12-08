@@ -10,3 +10,9 @@ body {
 #root > div {
     height: 100dvh;
 }
+
+button a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
