@@ -8,15 +8,19 @@
     align-items: center;
     justify-content: center;
     margin-top: 10%;
-  }
+}
+
+.add-book-form {
+  margin-top: 0.75rem;
+}
 
 .login-form h2,
 .logout-form h2,
 .register-form h2,
 .edit-user-form h2,
 .add-book-form h2 {
-    margin-bottom: 20px;
-  }
+    margin-bottom: 10px;
+}
 
 .form {
 border-radius: 20px;
@@ -40,7 +44,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-margin-bottom: 15px;
+margin-bottom: 8px;
 }
   
 .login-form input,
@@ -70,11 +74,41 @@ border-radius: 4px;
 cursor: pointer;
 }
 
-.add-book-form textarea {
-  width: 100%;
-  resize: vertical;
+.add-book-form .form,
+.edit-user .form {
+  margin-top: 1rem;
+  height: 50%;
+  width: 400px;
 }
 
-.add-book-form {
-  margin-top: 1rem;
+.add-book-form .form div,
+.edit-user .form div {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.add-book-form .form div input,
+.add-book-form .form div textarea,
+.add-book-form .form div select,
+.edit-user .form div input,
+.edit-user .form div select  {
+  width: 60%;
+  box-sizing: border-box;
+}
+
+.user-details-wrapper.add-book-form {
+  height: fit-content;
+}
+
+.user-details-wrapper.add-book-form img {
+  width: 200px;
+  height: 200px;
+}
+
+.user-details-wrapper.add-book-form .edit-user-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }

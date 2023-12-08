@@ -59,7 +59,7 @@ const Card = ({ status }) => {
       <div className="book-card">
         <div className="profile-picture">
           <img
-            src="https://via.placeholder.com/200"
+            src="https://img.freepik.com/premium-photo/books-collection-isolated-white-background-vector-illustration-retro-style_941097-2684.jpg"
             alt="Book Cover"
           />
         </div>

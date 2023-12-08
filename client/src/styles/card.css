@@ -100,13 +100,14 @@
 }
 
 .profile-picture img {
-    border-radius: 0 50% 0 50%;
+    border-radius: 0 40% 0 40%;
     width: 200px;
-    height: 200px;
+    height: 250px;
+    margin-top: 10px;
 }
 
 .user-details-wrapper .profile-picture img {
-    border-radius: 50%;
+    border-radius: 0;
 }
 
 .books-status-button {
@@ -163,4 +164,13 @@
     border-radius: 45%;
     width: 6%;
     cursor: pointer;
+}
+
+.book-card-info button {
+    margin: 10px 0;
+}
+
+.user-details {
+    height: fit-content;
+    padding: 16px;
 }

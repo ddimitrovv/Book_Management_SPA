@@ -6,10 +6,12 @@ const urls = {
     Logout: `${baseUrl}logout/`,
     Register: `${baseUrl}register/`,
     BooksByStatus: (status) => `${baseUrl}books/${status}/`,
-    BookDetail: (id) => `${baseUrl}books/${id}`,
+    BookDetail: (id) => `${baseUrl}books/details/${id}/`,
+    BookEdit: (id) => `${baseUrl}books/edit/${id}/`,
+    BookDelete: (id) => `${baseUrl}books/delete/${id}/`,
     AddBook: `${baseUrl}books/create/`,
-    UserDetails: `${baseUrl}/users/`,
-    EditUser: `${baseUrl}/users/update-profile/`,
+    UserDetails: `${baseUrl}users/`,
+    EditUser: `${baseUrl}users/update-profile/`,
   };
   
   export default urls;

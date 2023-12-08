@@ -35,7 +35,7 @@ const UserDetails = () => {
                 {userDetails.user_profile.profile_picture ? (
                 <img src={userDetails.user_profile.profile_picture} alt={`Profile Picture`} />
                 ) : (
-                <img src="https://via.placeholder.com/200" alt="Book Cover" />
+                <img src="https://as2.ftcdn.net/v2/jpg/00/64/67/63/1000_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="Book Cover" />
                 )}
             </div>
             <div className="book-card-info">

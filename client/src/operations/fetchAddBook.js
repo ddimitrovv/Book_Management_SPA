@@ -10,7 +10,7 @@ export default function fetchAddBook(name, author, picture, description, bookSta
           Authorization: `Token ${authToken}`,
         }
       : { 'Content-Type': 'application/json' };
-
+    price = price !== 0 ? price : null
     const body = JSON.stringify({
         name,
         author,
