@@ -13,6 +13,7 @@ import Register from './components/Register';
 import UserDetails from './components/UserDetails';
 import EditUser from './components/EditUser';
 import AddBook from './components/AddBook';
+import EditBook from './components/EditBook'
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
             <Route path={paths.Logout} element={<Logout />} />
             <Route path={paths.BooksByStatus(':status')} element={<BookListByStatus />} />
             <Route path={paths.BookDetail(':id')} element={<BookDetails />} />
+            <Route path={paths.BookEdit(':id')} element={<EditBook />} />
             <Route path={paths.AddBook} element={<AddBook />} />
             <Route path={paths.UserDetails} element={<UserDetails />} />
             <Route path={paths.EditUser} element={<EditUser />} />

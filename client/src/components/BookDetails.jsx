@@ -36,6 +36,8 @@ export default function BookDetails() {
           <div className="book-details-header">
             <h2>{bookDetails.name}</h2>
             <p>{bookDetails.author}</p>
+            <p className='description'>{bookDetails.description}</p>
+            <p>Price: {bookDetails.price}</p>
           </div>
           <div className="book-details-content">
             <div className="profile-picture">
@@ -45,16 +47,14 @@ export default function BookDetails() {
                 <img src="https://nnpdev.wustl.edu/img/bookCovers/genericBookCover.jpg" alt="Book Cover" />
               )}
             </div>
-            <div className="book-description">
-              <p>{bookDetails.description}</p>
-            </div>
+
           </div>
         </div>
         <div className='book-buttons'>
-            <button className='edit-book-button'>Edit
+            <button className='edit-book-button'>
                 <Link to={paths.BookEdit(id)}>Edit</Link>
             </button>
-            <button className='delete-book-button'>Delete
+            <button className='delete-book-button'>
                 <Link to={paths.BookDelete(id)}>Delete</Link>
             </button>
         </div>

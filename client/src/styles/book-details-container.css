@@ -17,6 +17,7 @@
     justify-content: space-evenly;
     padding: 1.5rem;
     gap: 2rem;
+    width: fit-content;
 }
 
 .book-details-buttons .book-details {
@@ -88,4 +89,16 @@
     text-decoration: none;
     font-weight: 800;
     color: black;
+}
+
+.book-details-header {
+    max-width: 50%;
+}
+
+.description {
+    margin: 2.5rem 0;
+}
+
+.book-details-buttons {
+    max-width: 700px;
 }
