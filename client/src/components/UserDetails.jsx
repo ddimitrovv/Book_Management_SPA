@@ -50,7 +50,7 @@ const UserDetails = () => {
                     <Link to={{ pathname: paths.EditUser, state: { userDetails } }}>Edit</Link>
                 </button>
                 <button className='delete-user-button'>
-                    <Link to={`${paths.BookDetail(userDetails.user.id)}`}>Delete</Link>
+                    <Link to={paths.DeleteUser}>Delete</Link>
                 </button>
             </div>
 

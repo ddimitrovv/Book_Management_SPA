@@ -12,6 +12,7 @@ const urls = {
     AddBook: `${baseUrl}books/create/`,
     UserDetails: `${baseUrl}users/`,
     EditUser: `${baseUrl}users/update-profile/`,
+    DeleteUser: `${baseUrl}users/delete/`,
   };
   
   export default urls;

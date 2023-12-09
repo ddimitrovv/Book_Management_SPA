@@ -14,6 +14,8 @@ import UserDetails from './components/UserDetails';
 import EditUser from './components/EditUser';
 import AddBook from './components/AddBook';
 import EditBook from './components/EditBook'
+import BookDelete from './components/BookDelete';
+import UserDelete from './components/UserDelete';
 
 const App = () => {
   return (
@@ -30,9 +32,11 @@ const App = () => {
             <Route path={paths.BooksByStatus(':status')} element={<BookListByStatus />} />
             <Route path={paths.BookDetail(':id')} element={<BookDetails />} />
             <Route path={paths.BookEdit(':id')} element={<EditBook />} />
+            <Route path={paths.BookDelete(':id')} element={<BookDelete />} />
             <Route path={paths.AddBook} element={<AddBook />} />
             <Route path={paths.UserDetails} element={<UserDetails />} />
             <Route path={paths.EditUser} element={<EditUser />} />
+            <Route path={paths.DeleteUser} element={<UserDelete />} />
 
           </Routes>
         </AuthProvider>

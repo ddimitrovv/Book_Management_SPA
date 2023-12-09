@@ -10,6 +10,7 @@ const paths = {
     AddBook: '/books/create',
     UserDetails: `/users`,
     EditUser: `/users/edit`,
+    DeleteUser: `/users/delete`,
   };
   
   export default paths;
