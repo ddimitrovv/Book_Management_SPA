@@ -9,16 +9,21 @@ export default function BookDetails() {
   const [bookDetails, setBookDetails] = useState();
 
   useEffect(() => {
+    const headers = authToken
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${authToken}`,
+          }
+        : { 'Content-Type': 'application/json' };
+
     fetch(urls.BookDetail(id), {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${authToken}`,
-      },
+      headers: headers
     })
       .then(response => response.json())
       .then(data => {
         setBookDetails(data);
+        console.log(data);
       })
       .catch(error => {
         console.error('Error fetching user details:', error.message);
@@ -50,6 +55,7 @@ export default function BookDetails() {
 
           </div>
         </div>
+        {bookDetails.status && (
         <div className='book-buttons'>
             <button className='edit-book-button'>
                 <Link to={paths.BookEdit(id)}>Edit</Link>
@@ -57,10 +63,12 @@ export default function BookDetails() {
             <button className='delete-book-button'>
                 <Link to={paths.BookDelete(id)}>Delete</Link>
             </button>
-        </div>
+        </div> 
+        )
+        }
       </div>
       <div className="book-details-footer">
-        <button><Link to={paths.BooksByStatus(bookDetails.status)}>Back to List</Link></button>
+        <button><Link to={paths.Home}>Back to List</Link></button>
       </div>
     </div>
   );

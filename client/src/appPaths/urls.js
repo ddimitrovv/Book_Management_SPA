@@ -5,6 +5,7 @@ const urls = {
     Login: `${baseUrl}login/`,
     Logout: `${baseUrl}logout/`,
     Register: `${baseUrl}register/`,
+    MyBooks: `${baseUrl}my-books/`,
     BooksByStatus: (status) => `${baseUrl}books/${status}/`,
     BookDetail: (id) => `${baseUrl}books/details/${id}/`,
     BookEdit: (id) => `${baseUrl}books/edit/${id}/`,

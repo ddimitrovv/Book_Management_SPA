@@ -27,7 +27,7 @@ const Navigation = () => {
             {isHomePage ? (
               <>
                 <li>
-                  <Link to={paths.AddBook}>Add Book</Link>
+                  <Link to={paths.MyBooks}>My Books</Link>
                 </li>
                 <li>
                   <Link to={paths.Logout}>Logout</Link>

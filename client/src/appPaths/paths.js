@@ -3,6 +3,7 @@ const paths = {
     Login: '/login',
     Logout: '/logout',
     Register: '/register',
+    MyBooks: '/my-books',
     BooksByStatus: (status) => `/books/${status}`,
     BookDetail: (id) => `/books/details/${id}`,
     BookEdit: (id) => `/books/edit/${id}`,

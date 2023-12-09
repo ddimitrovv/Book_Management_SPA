@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Carousel } from 'react-bootstrap';
 import { useAuth } from './AuthProvider';
 import urls from '../appPaths/urls';
 import paths from '../appPaths/paths';
+import Card from './BookCard';
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
@@ -12,25 +13,27 @@ export default function Home() {
     const fetchData = () => {
       const authToken = localStorage.getItem('authToken');
 
-      const headers = authToken ? {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${authToken}`,
-      } : {'Content-Type': 'application/json',}
+      const headers = authToken
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${authToken}`,
+          }
+        : { 'Content-Type': 'application/json' };
 
       fetch(urls.Home, {
         method: 'GET',
         headers: headers,
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
             throw new Error('Failed to fetch data');
           }
           return response.json();
         })
-        .then(responseData => {
+        .then((responseData) => {
           setData(responseData);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error fetching data:', error.message);
         });
     };
@@ -38,41 +41,26 @@ export default function Home() {
   }, [isAuthenticated]);
 
   return (
-    <div className='home'>
+    <div>
       <h1>Welcome to Your Library</h1>
-        <div className='book-card-wrapper'>
-            {data.status && Array.isArray(data.status) ? (
-                data.status.map((status, index) => <Card key={index} status={status} />)
-            ) : (
-                <p>No status data available</p>
-            )}
-        </div>
+      <div>
+        {data.books_by_genre && Object.keys(data.books_by_genre).length > 0 ? (
+          <div className="scrollable-container">
+            {Object.entries(data.books_by_genre).map(([genre, books], index) => (
+              <div key={index} className="genre-section">
+                <h2>{genre}</h2>
+                <div className="book-row">
+                  {books.map((book, bookIndex) => (
+                    <Card key={bookIndex} book={book} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No books data available</p>
+        )}
+      </div>
     </div>
   );
 }
-
-
-const Card = ({ status }) => {
-    const [statusValue, statusLabel] = status;
-  
-    return (
-      <div className="book-card">
-        <div className="profile-picture">
-          <img
-            src="https://img.freepik.com/premium-photo/books-collection-isolated-white-background-vector-illustration-retro-style_941097-2684.jpg"
-            alt="Book Cover"
-          />
-        </div>
-        <div className="book-card-wrapper">
-          <div className="book-card-info">
-            <button className='books-status-button'>
-              <Link to={paths.BooksByStatus(statusValue)}>
-                <h2>{statusValue}</h2>
-              </Link>
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  

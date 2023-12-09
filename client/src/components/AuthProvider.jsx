@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
 
       localStorage.removeItem('authToken');
       localStorage.removeItem('authState');
-      localStorage.removeItem('username')
+      localStorage.removeItem('username');
 
       setIsAuthenticated(false);
       navigate(paths.Home);
@@ -81,7 +81,6 @@ const AuthProvider = ({ children }) => {
 
       if (!response.ok) {
         const data = await response.json();
-        console.log(data);
         throw new Error('Registration failed');
       }
 
