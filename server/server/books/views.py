@@ -6,11 +6,11 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.views import APIView
 
-from server.books.models import Book
+from server.books.models import Book, BookRating
 from server.books.operations import get_book
 from server.books.permissions import IsOwner
 from server.books.serializers import (BookCreateSerializer, BookSerializerRequestUserIsOwner,
-                                      BookSerializerRequestUserIsNotOwner)
+                                      BookSerializerRequestUserIsNotOwner, BookRatingSerializer)
 from server.users.operations import get_user_profile
 
 
@@ -85,13 +85,20 @@ class DetailsBook(APIView):
             serializer = (
                 BookSerializerRequestUserIsOwner
                 if (request.user.is_authenticated and hasattr(request.user, 'userprofile'))
-                   and request.user.userprofile == book.owner
+                   and request.user == book.owner.user
                 else BookSerializerRequestUserIsNotOwner
             )
-            print((request.user.is_authenticated and hasattr(request.user, 'userprofile'))
-                   and request.user.userprofile == book.owner)
-
-            return Response(serializer(book).data, status=status.HTTP_200_OK)
+            rating = BookRating.objects.filter(userprofile_id=request.user.userprofile, book_id=book_pk).first()
+            if rating:
+                book_rating = rating.rating
+            else:
+                book_rating = 0
+            data = {
+                'book': serializer(book).data,
+                'is_auth': True if request.user.is_authenticated else False,
+                'user_rating': book_rating
+            }
+            return Response(data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -213,3 +220,67 @@ class BookDeleteView(generics.DestroyAPIView):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response({'detail': 'Book deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class RateBook(APIView):
+    """
+    API view to rate a specific book for the authenticated user.
+
+    Requires TokenAuthentication.
+
+    Methods:
+    - post: Rates the specified book for the authenticated user.
+            Returns a 404 response if the book is not found.
+    """
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsOwner,)
+
+    def post(self, request, book_pk, *args, **kwargs):
+        """
+        Handles HTTP POST requests to rate a specific book.
+
+        Parameters:
+        - request: The HTTP request object.
+        - book_pk: Primary key of the book to rate.
+        - *args: Additional positional arguments.
+        - **kwargs: Additional keyword arguments.
+
+        Returns:
+        - Response: Serialized book rating data or a 404 response if the book is not found.
+        """
+
+        book = get_book(book_pk)
+        userprofile = request.user.userprofile
+        rating_value = request.data.get('rating')
+
+        data = {
+            'rating': rating_value,
+            'userprofile': userprofile.pk,
+            'book': book.pk
+        }
+
+        if book:
+            existing_rating = BookRating.objects.filter(userprofile=request.user.userprofile, book=book).first()
+
+            if existing_rating:
+                serializer = BookRatingSerializer(existing_rating, data=data)
+            else:
+                serializer = BookRatingSerializer(data=data)
+                serializer.initial_data['userprofile'] = request.user.userprofile.pk
+                serializer.initial_data['book'] = book.pk
+
+            if serializer.is_valid():
+                serializer.save()
+                response_serializer = (
+                    BookSerializerRequestUserIsOwner
+                    if (request.user.is_authenticated and hasattr(request.user, 'userprofile'))
+                       and request.user == book.owner.user
+                    else BookSerializerRequestUserIsNotOwner
+                )
+                return Response(response_serializer(book).data, status=status.HTTP_201_CREATED)
+            else:
+                print(serializer.errors)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)

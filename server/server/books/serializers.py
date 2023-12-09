@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
-from server.books.models import Book
+from server.books.models import Book, BookRating
 from server.users.operations import get_user_profile
 
 
@@ -10,11 +11,12 @@ class AverageRatingField(serializers.Field):
     """
 
     def to_representation(self, value):
-        ratings = value.ratings.all()
-        if ratings:
-            average_rating = sum(rating.rating for rating in ratings) / len(ratings)
+        ratings_queryset = value.book_ratings.all()
+
+        if ratings_queryset:
+            average_rating = sum(rating.rating for rating in ratings_queryset) / len(ratings_queryset)
             return round(average_rating, 2)
-        return 'Not available'
+        return 0.00
 
 
 class BookSerializerRequestUserIsOwner(serializers.ModelSerializer):
@@ -88,7 +90,7 @@ class BookCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = '__all__'
+        exclude = ('ratings',)
 
     def create(self, validated_data):
         """
@@ -104,3 +106,29 @@ class BookCreateSerializer(serializers.ModelSerializer):
         user_profile = get_user_profile(self.context['request'])
         validated_data['owner'] = user_profile
         return super().create(validated_data)
+
+
+class BookRatingSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the BookRating model.
+
+    Fields:
+    - userprofile (PrimaryKeyRelatedField): The user who rated the book.
+    - book (PrimaryKeyRelatedField): The book that is being rated.
+    - rating (PositiveIntegerField): The rating given by the user.
+
+    Validators:
+    - UniqueTogetherValidator: Ensures that a user can rate a book only once.
+    """
+
+    class Meta:
+        model = BookRating
+        fields = ['userprofile', 'book', 'rating']
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=BookRating.objects.all(),
+                fields=['userprofile', 'book'],
+                message='You have already rated this book.'
+            )
+        ]

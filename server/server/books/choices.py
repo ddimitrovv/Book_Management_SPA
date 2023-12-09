@@ -52,6 +52,7 @@ class BookGenreChoices(models.TextChoices):
     - COMICS: Graphic novels and comic books.
     """
 
+    NOVEL = 'Novel', 'Novel'
     FICTION = 'Fiction', 'Fiction'
     NON_FICTION = 'Non-Fiction', 'Non-Fiction'
     MYSTERY = 'Mystery', 'Mystery'

@@ -16,52 +16,6 @@ from server.users.serializers import UserRegistrationSerializer, UserLoginSerial
 from server.books.serializers import BookSerializerRequestUserIsNotOwner
 
 
-# class HomeView(APIView):
-#     """
-#     Home View
-#
-#     If the user is logged in, this view returns detailed information including
-#     the user's profile and their books. If the user is not logged in, it returns None.
-#
-#     Attributes:
-#     - permission_classes (tuple): A tuple containing the permission classes for the view.
-#     """
-#
-#     permission_classes = (AllowAny,)
-#
-#     def get(self, request, *args, **kwargs):
-#         """
-#         Retrieve user data, user profile, and books.
-#
-#         Parameters:
-#         - request (Request): The HTTP request object.
-#
-#         Returns:
-#         - Response: A response containing user, user profile, and books collections types.
-#         """
-#
-#         user = request.user
-#         if user.is_anonymous:
-#             data = {
-#                 'user': None,
-#                 'user_profile': None,
-#                 'status': BookStatusChoices.choices,
-#             }
-#         else:
-#             user_profile = get_user_profile(request)
-#
-#             user_data = CustomUserSerializer(user).data if user else None
-#             user_profile_data = UserProfileSerializer(user_profile).data if user_profile else None
-#
-#             data = {
-#                 'user': user_data,
-#                 'user_profile': user_profile_data,
-#                 'status': BookStatusChoices.choices,
-#             }
-#
-#         return Response(data)
-
-
 class HomeView(APIView):
     """
     Home View
