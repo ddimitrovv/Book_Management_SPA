@@ -88,15 +88,13 @@ class DetailsBook(APIView):
                    and request.user == book.owner.user
                 else BookSerializerRequestUserIsNotOwner
             )
-            rating = BookRating.objects.filter(userprofile_id=request.user.userprofile, book_id=book_pk).first()
-            if rating:
-                book_rating = rating.rating
-            else:
-                book_rating = 0
+            rating = (BookRating.objects.filter(userprofile_id=request.user.userprofile, book_id=book_pk).first()
+                      if hasattr(request.user, 'userprofile') else 0)
+
             data = {
                 'book': serializer(book).data,
                 'is_auth': True if request.user.is_authenticated else False,
-                'user_rating': book_rating
+                'user_rating': rating
             }
             return Response(data, status=status.HTTP_200_OK)
         else:
