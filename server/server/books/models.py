@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-from server.books.choices import BookStatusChoices
+from server.books.choices import BookStatusChoices, BookGenreChoices
 from server.users.models import UserProfile
 
 
@@ -33,8 +33,6 @@ class Book(models.Model):
 
     NAME_MAX_LEN = 150
     AUTHOR_MAX_LEN = 50
-    RATING_MIN_VALUE = 1
-    RATING_MAX_VALUE = 5
     PRICE_MAX_DIGITS = 4
     PRICE_DECIMAL_PLACES = 2
 
@@ -56,13 +54,8 @@ class Book(models.Model):
         null=True
     )
 
-    rating = models.PositiveIntegerField(
-        validators=(
-            MinValueValidator(RATING_MIN_VALUE),
-            MaxValueValidator(RATING_MAX_VALUE)
-        ),
-        blank=True,
-        null=True
+    genre = models.TextField(
+        choices=BookGenreChoices.choices
     )
 
     status = models.TextField(
@@ -82,6 +75,25 @@ class Book(models.Model):
         related_name='books',
     )
 
+    ratings = models.ManyToManyField(
+        UserProfile,
+        through='BookRating',
+        related_name='rated_books',
+        blank=True,
+    )
+
+    def average_rating(self):
+        """
+        Calculate the average rating for the book.
+
+        Returns:
+        - float: The average rating or None if there are no ratings.
+        """
+        ratings = self.ratings.values_list('bookrating__rating', flat=True)
+        if ratings:
+            return sum(ratings) / len(ratings)
+        return None
+
     def __str__(self):
         """
         Human-readable representation of the book instance.
@@ -91,3 +103,54 @@ class Book(models.Model):
         """
 
         return f"{self.name} by {self.author}"
+
+
+class BookRating(models.Model):
+    """
+    Model representing a user's rating for a book.
+
+    Attributes:
+    - user (ForeignKey): The user who rated the book.
+    - book (ForeignKey): The book that is being rated.
+    - rating (PositiveIntegerField): The rating given by the user.
+
+    Meta:
+    - unique_together: Ensures that a user can rate a book only once.
+
+    Methods:
+    - __str__: Human-readable representation of the book rating instance.
+    """
+
+    RATING_MIN_VALUE = 1
+    RATING_MAX_VALUE = 5
+
+    userprofile = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name='book_ratings',
+    )
+
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name='book_ratings',
+    )
+
+    rating = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(RATING_MIN_VALUE),
+            MaxValueValidator(RATING_MAX_VALUE),
+        ],
+    )
+
+    class Meta:
+        unique_together = ('userprofile', 'book')
+
+    def __str__(self):
+        """
+        Human-readable representation of the book rating instance.
+
+        Returns:
+        - str: A string representation of the book rating.
+        """
+        return f"{self.userprofile.user.username}'s rating ({self.rating}) for {self.book.name} by {self.book.author}"

@@ -1,6 +1,6 @@
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -9,7 +9,8 @@ from rest_framework.views import APIView
 from server.books.models import Book
 from server.books.operations import get_book
 from server.books.permissions import IsOwner
-from server.books.serializers import BookCreateSerializer, BookSerializer
+from server.books.serializers import (BookCreateSerializer, BookSerializerRequestUserIsOwner,
+                                      BookSerializerRequestUserIsNotOwner)
 from server.users.operations import get_user_profile
 
 
@@ -62,8 +63,7 @@ class DetailsBook(APIView):
             Returns a 404 response if the book is not found or if the user does not own the book.
     """
 
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, IsOwner,)
+    permission_classes = (AllowAny,)
 
     def get(self, request, book_pk, *args, **kwargs):
         """
@@ -80,8 +80,18 @@ class DetailsBook(APIView):
         """
 
         book = get_book(book_pk)
+
         if book:
-            return Response(BookSerializer(book).data, status=status.HTTP_200_OK)
+            serializer = (
+                BookSerializerRequestUserIsOwner
+                if (request.user.is_authenticated and hasattr(request.user, 'userprofile'))
+                   and request.user.userprofile == book.owner
+                else BookSerializerRequestUserIsNotOwner
+            )
+            print((request.user.is_authenticated and hasattr(request.user, 'userprofile'))
+                   and request.user.userprofile == book.owner)
+
+            return Response(serializer(book).data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -128,7 +138,7 @@ class AllBooksByCategory(APIView):
             paginator = BooksByStatusPagination()
             result_page = paginator.paginate_queryset(books, request)
 
-            serialized_books = BookSerializer(result_page, many=True).data
+            serialized_books = BookSerializerRequestUserIsOwner(result_page, many=True).data
             return paginator.get_paginated_response(serialized_books)
         else:
             return Response({'detail': 'User not authenticated'}, status=book_status.HTTP_401_UNAUTHORIZED)
@@ -145,7 +155,7 @@ class BookUpdateView(RetrieveUpdateAPIView):
     """
 
     queryset = Book.objects.all()
-    serializer_class = BookSerializer
+    serializer_class = BookSerializerRequestUserIsOwner
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, IsOwner,)
 
@@ -184,7 +194,7 @@ class BookDeleteView(generics.DestroyAPIView):
     permission_classes = (IsAuthenticated, IsOwner,)
 
     queryset = Book.objects.all()
-    serializer_class = BookSerializer
+    serializer_class = BookSerializerRequestUserIsOwner
     lookup_field = 'id'
 
     def destroy(self, request, *args, **kwargs):

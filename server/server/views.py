@@ -4,18 +4,121 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.authentication import TokenAuthentication
 
 from server.books.choices import BookStatusChoices
+from server.books.models import Book
 from server.users.operations import get_user_profile, check_if_user_exists
 from server.users.serializers import CustomUserSerializer, UserProfileSerializer
 from server.users.serializers import UserRegistrationSerializer, UserLoginSerializer
+from server.books.serializers import BookSerializerRequestUserIsNotOwner
+
+
+# class HomeView(APIView):
+#     """
+#     Home View
+#
+#     If the user is logged in, this view returns detailed information including
+#     the user's profile and their books. If the user is not logged in, it returns None.
+#
+#     Attributes:
+#     - permission_classes (tuple): A tuple containing the permission classes for the view.
+#     """
+#
+#     permission_classes = (AllowAny,)
+#
+#     def get(self, request, *args, **kwargs):
+#         """
+#         Retrieve user data, user profile, and books.
+#
+#         Parameters:
+#         - request (Request): The HTTP request object.
+#
+#         Returns:
+#         - Response: A response containing user, user profile, and books collections types.
+#         """
+#
+#         user = request.user
+#         if user.is_anonymous:
+#             data = {
+#                 'user': None,
+#                 'user_profile': None,
+#                 'status': BookStatusChoices.choices,
+#             }
+#         else:
+#             user_profile = get_user_profile(request)
+#
+#             user_data = CustomUserSerializer(user).data if user else None
+#             user_profile_data = UserProfileSerializer(user_profile).data if user_profile else None
+#
+#             data = {
+#                 'user': user_data,
+#                 'user_profile': user_profile_data,
+#                 'status': BookStatusChoices.choices,
+#             }
+#
+#         return Response(data)
 
 
 class HomeView(APIView):
     """
     Home View
+
+    If the user is logged in, this view returns detailed information including
+    the user's profile, their books, and books grouped by genre. If the user is not logged in, it returns None.
+
+    Attributes:
+    - permission_classes (tuple): A tuple containing the permission classes for the view.
+    """
+
+    permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieve user data, user profile, books, and books grouped by genre.
+
+        Parameters:
+        - request (Request): The HTTP request object.
+
+        Returns:
+        - Response: A response containing user, user profile, books, and books grouped by genre.
+        """
+
+        user = request.user
+        if user.is_anonymous:
+            data = {
+                'user': None,
+                'user_profile': None,
+            }
+        else:
+            user_profile = get_user_profile(request)
+
+            user_data = CustomUserSerializer(user).data if user else None
+            user_profile_data = UserProfileSerializer(user_profile).data if user_profile else None
+
+            data = {
+                'user': user_data,
+                'user_profile': user_profile_data,
+            }
+
+        # Get books grouped by genre
+        all_books = Book.objects.all()
+        books_by_genre = {}
+        for book in all_books:
+            if book.genre not in books_by_genre:
+                books_by_genre[book.genre] = []
+            books_by_genre[book.genre].append(BookSerializerRequestUserIsNotOwner(book).data)
+
+        data['books_by_genre'] = books_by_genre
+
+        return Response(data)
+
+
+class MyBooksView(APIView):
+    """
+    This view retirns user books by status
 
     If the user is logged in, this view returns detailed information including
     the user's profile and their books. If the user is not logged in, it returns None.
@@ -24,7 +127,8 @@ class HomeView(APIView):
     - permission_classes (tuple): A tuple containing the permission classes for the view.
     """
 
-    permission_classes = (AllowAny,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         """
