@@ -50,7 +50,7 @@ export default function Home() {
           <div className="scrollable-container">
             {Object.entries(data.books_by_genre).map(([genre, books], index) => (
               <div key={index} className="genre-section">
-                <h2>{genre}</h2>
+                <h2 className='books-genre'>{genre}</h2>
                 <div className="book-row">
                   {books.map((book, bookIndex) => (
                     <Card key={bookIndex} book={book} />

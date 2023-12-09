@@ -74,4 +74,8 @@ color: #ccc;
     width: 50%;
     margin: auto;
     margin-bottom: 2rem;
-  }
+}
+
+.books-genre {
+    text-align: center;
+}
