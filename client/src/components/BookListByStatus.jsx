@@ -4,6 +4,7 @@ import urls from '../appPaths/urls';
 import BookCard from './BookCard';
 
 export default function BookListByStatus() {
+
   const { status } = useParams();
   const [books, setBooks] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -71,8 +72,8 @@ export default function BookListByStatus() {
           next: responseData.next,
           previous: responseData.previous,
         });
-        const page = url.split('=')[1]
-        setSearchParams(page ? {page} : {})
+        const page = url.split('=')[1];
+        setSearchParams(page ? {page} : {});
       })
       .catch((error) => {
         console.error('Error fetching books:', error.message);

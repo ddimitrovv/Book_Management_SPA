@@ -15,7 +15,6 @@ const EditBook = () => {
   const [author, setAuthor] = useState('');
   const [picture, setPicture] = useState('');
   const [description, setDescription] = useState('');
-  const [rating, setRating] = useState('');
   const [status, setStatus] = useState('');
   const [price, setPrice] = useState('');
 
@@ -29,13 +28,12 @@ const EditBook = () => {
     })
       .then(response => response.json())
       .then(data => {
-        setName(data.name);
-        setAuthor(data.author);
-        setPicture(data.picture);
-        setDescription(data.description);
-        setRating(data.rating);
-        setStatus(data.status);
-        setPrice(data.price);
+        setName(data.book.name);
+        setAuthor(data.book.author);
+        setPicture(data.book.picture || '');
+        setDescription(data.book.description || '');
+        setStatus(data.book.status);
+        setPrice(data.book.price || '');
       })
       .catch(error => {
         console.error('Error fetching user details:', error.message);
@@ -51,7 +49,6 @@ const EditBook = () => {
       author: author,
       picture: picture || null,
       description: description || null,
-      rating: rating || null,
       status: status,
       price: price || null,
     };

@@ -42,7 +42,9 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Welcome to Your Library</h1>
+      <h1 className='welcome'>Welcome to BookManagement</h1>
+      <h2 className='wellcome-message'>Your Gateway to Knowledge and Imagination! Dive into the world of books, where every page holds a new adventure, and every story sparks the imagination. Discover, learn, and embark on a literary journey with us. Happy Reading!
+</h2>
       <div>
         {data.books_by_genre && Object.keys(data.books_by_genre).length > 0 ? (
           <div className="scrollable-container">
@@ -54,6 +56,7 @@ export default function Home() {
                     <Card key={bookIndex} book={book} />
                   ))}
                 </div>
+                <hr />
               </div>
             ))}
           </div>

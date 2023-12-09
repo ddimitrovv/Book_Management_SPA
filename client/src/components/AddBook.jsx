@@ -12,10 +12,11 @@ const AddBook = () => {
   const [picture, setPicture] = useState('');
   const [description, setDescription] = useState('');
   const [bookStatus, setBookStatus] = useState('Read');
+  const [genre, setBookGenre] = useState('Novel');
   const [price, setPrice] = useState('');
 
   const handleAddBook = async () => {
-    fetchAddBook(name, author, picture, description, bookStatus, price, navigate)
+    fetchAddBook(name, author, picture, description, bookStatus, genre, price, navigate)
   };
 
   return (
@@ -67,6 +68,36 @@ const AddBook = () => {
                 <option value="Unread">Unread</option>
                 <option value="Want to Buy">Want to Buy</option>
             </select>
+        </div>
+        <div>
+          <label>Select Genre:</label>
+          <select
+            value={genre}
+            onChange={(e) => setBookGenre(e.target.value)}
+          >
+            <option value="Novel">Novel</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Non-Fiction">Non-Fiction</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Science Fiction">Science Fiction</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Romance">Romance</option>
+            <option value="Horror">Horror</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Historical Fiction">Historical Fiction</option>
+            <option value="Biography">Biography</option>
+            <option value="Autobiography">Autobiography</option>
+            <option value="Self-Help">Self-Help</option>
+            <option value="Business">Business</option>
+            <option value="Travel">Travel</option>
+            <option value="Cooking">Cooking</option>
+            <option value="Science">Science</option>
+            <option value="Philosophy">Philosophy</option>
+            <option value="Poetry">Poetry</option>
+            <option value="Children">Children</option>
+            <option value="Young Adult">Young Adult</option>
+            <option value="Comics">Comics</option>
+          </select>
         </div>
         <div>
             <label>Book Price:</label>

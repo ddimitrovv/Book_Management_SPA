@@ -8,6 +8,7 @@ const paths = {
     BookDetail: (id) => `/books/details/${id}`,
     BookEdit: (id) => `/books/edit/${id}`,
     BookDelete: (id) => `/books/delete/${id}`,
+    RateBook: (id) => `/books/rate-book/${id}`,
     AddBook: '/books/create',
     UserDetails: `/users`,
     EditUser: `/users/edit`,

@@ -1,7 +1,6 @@
-import paths from "../appPaths/paths";
 import urls from "../appPaths/urls";
 
-export default function fetchAddBook(name, author, picture, description, bookStatus, genre, price, navigate) {
+export default function rateBook(rating, book_id, bookState) {
 
     const authToken = localStorage.getItem('authToken');
     const headers = authToken
@@ -10,18 +9,12 @@ export default function fetchAddBook(name, author, picture, description, bookSta
           Authorization: `Token ${authToken}`,
         }
       : { 'Content-Type': 'application/json' };
-    price = price !== 0 ? price : null
+
     const body = JSON.stringify({
-        name,
-        author,
-        picture: picture || null,
-        description: description || null,
-        status: bookStatus,
-        genre: genre,
-        price: price || null
+        rating,
     });
 
-    fetch(urls.AddBook, {
+    fetch(urls.RateBook(book_id), {
       method: 'POST',
       headers: headers,
       body: body
@@ -33,9 +26,9 @@ export default function fetchAddBook(name, author, picture, description, bookSta
       return response.json();
     })
     .then((data) => {
-      navigate(paths.Home)
+        bookState(data);
     })
     .catch(error => {
-      console.error('Error adding book:', error.message);
+      console.error('Error rating book:', error.message);
     });
 };

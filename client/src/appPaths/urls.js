@@ -10,6 +10,7 @@ const urls = {
     BookDetail: (id) => `${baseUrl}books/details/${id}/`,
     BookEdit: (id) => `${baseUrl}books/edit/${id}/`,
     BookDelete: (id) => `${baseUrl}books/delete/${id}/`,
+    RateBook: (id) => `${baseUrl}books/rate-book/${id}/`,
     AddBook: `${baseUrl}books/create/`,
     UserDetails: `${baseUrl}users/`,
     EditUser: `${baseUrl}users/update-profile/`,
