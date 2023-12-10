@@ -16,6 +16,9 @@ const Navigation = () => {
               <Link to={paths.Login}>Login</Link>
             </li>
             <li>
+              <Link to={paths.Home}>Home</Link>
+            </li>
+            <li>
               <Link to={paths.Register}>Register</Link>
             </li>
           </>

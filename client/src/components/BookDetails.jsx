@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import paths from '../appPaths/paths';
 import urls from '../appPaths/urls';
 import StarRating from './StarRating';
@@ -7,6 +7,7 @@ import rateBook from '../operations/rateBook';
 
 export default function BookDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const authToken = localStorage.getItem('authToken');
   const [bookDetails, setBookDetails] = useState();
   const [isUserAuth, setIsUserAuth] = useState();
@@ -24,7 +25,12 @@ export default function BookDetails() {
       method: 'GET',
       headers: headers
     })
-      .then(response => response.json())
+      .then(response => {
+        if (response.status === 401) {
+          navigate(paths.Login);
+        }
+        return response.json();
+      })
       .then(data => {
         setBookDetails(data.book);
         setIsUserAuth(data.is_auth);
