@@ -82,6 +82,8 @@ class DetailsBook(APIView):
         book = get_book(book_pk)
 
         if book:
+            if not request.user.is_authenticated:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
             serializer = (
                 BookSerializerRequestUserIsOwner
                 if (request.user.is_authenticated and hasattr(request.user, 'userprofile'))
