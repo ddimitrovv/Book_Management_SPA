@@ -19,7 +19,7 @@ const BookCard = ({ book }) => {
           <div className="book-card-info">
             <h2 className='book-title'>{name}</h2>
             <p>{author}</p>
-            <p className='book-rating'>Rating: {average_rating}</p>
+            <p className='book-rating'>Rating: {average_rating.toFixed(2)} / 5.00</p>
             
           </div>
         </div>

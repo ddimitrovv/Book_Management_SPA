@@ -17,33 +17,30 @@ import EditBook from './components/EditBook'
 import BookDelete from './components/BookDelete';
 import UserDelete from './components/UserDelete';
 import MyBooks from './components/MyBooks';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   return (
-
-      <div>
-        <AuthProvider>
-          <Navigation />
+    <div>
+      <AuthProvider>
+        <Navigation />
           <Routes>
-
             <Route path={paths.Home} element={<Home />} />
             <Route path={paths.Register} element={<Register />} />
             <Route path={paths.Login} element={<Login />} />
             <Route path={paths.Logout} element={<Logout />} />
-            <Route path={paths.MyBooks} element={<MyBooks />} />
-            <Route path={paths.BooksByStatus(':status')} element={<BookListByStatus />} />
-            <Route path={paths.BookDetail(':id')} element={<BookDetails />} />
-            <Route path={paths.BookEdit(':id')} element={<EditBook />} />
-            <Route path={paths.BookDelete(':id')} element={<BookDelete />} />
-            <Route path={paths.AddBook} element={<AddBook />} />
-            <Route path={paths.UserDetails} element={<UserDetails />} />
-            <Route path={paths.EditUser} element={<EditUser />} />
-            <Route path={paths.DeleteUser} element={<UserDelete />} />
-
+            <Route path={paths.BookDetail(':id')} element={<PrivateRoute element={<BookDetails />} />} />
+            <Route path={paths.MyBooks}  element={<PrivateRoute element={<MyBooks />} />} />
+            <Route path={paths.BooksByStatus(':status')} element={<PrivateRoute element={<BookListByStatus />} />} />
+            <Route path={paths.BookEdit(':id')} element={<PrivateRoute element={<EditBook />} />} />
+            <Route path={paths.BookDelete(':id')} element={<PrivateRoute element={<BookDelete />} />} />
+            <Route path={paths.AddBook} element={<PrivateRoute element={<AddBook />} />} />
+            <Route path={paths.UserDetails} element={<PrivateRoute element={<UserDetails />} />} />
+            <Route path={paths.EditUser} element={<PrivateRoute element={<EditUser />} />} />
+            <Route path={paths.DeleteUser} element={<PrivateRoute element={<UserDelete />} />} />
           </Routes>
-        </AuthProvider>
-      </div>
-
+      </AuthProvider>
+    </div>
   );
 };
 
