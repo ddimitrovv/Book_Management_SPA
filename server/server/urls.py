@@ -8,13 +8,15 @@ from server.views import HomeView, UserRegistrationView, UserLogoutView, UserLog
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', UserRegistrationView.as_view(), name='user_registration'),
-    path('login/', UserLoginView.as_view(), name='user_login'),
-    path('logout/', UserLogoutView.as_view(), name='user_logout'),
-    path('', HomeView.as_view(), name='home'),
-    path('my-books/', MyBooksView.as_view(), name='my-books'),
-    path('users/', include('server.users.urls')),
-    path('books/', include('server.books.urls')),
+    path('api/', include([
+        path('register/', UserRegistrationView.as_view(), name='user_registration'),
+        path('login/', UserLoginView.as_view(), name='user_login'),
+        path('logout/', UserLogoutView.as_view(), name='user_logout'),
+        path('', HomeView.as_view(), name='home'),
+        path('my-books/', MyBooksView.as_view(), name='my-books'),
+        path('users/', include('server.users.urls')),
+        path('books/', include('server.books.urls')),
+    ]))
 ]
 
 # Serve media files during development

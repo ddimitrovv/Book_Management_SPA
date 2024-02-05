@@ -1,7 +1,7 @@
 from server.users.models import CustomUser
 
 
-def get_user(*, pk: int = None, username: str = None, email: str = None) -> CustomUser | None:
+def get_user(*, pk: int = None, username: str = None, email: str = None):
     """
     Retrieve a CustomUser from the database using the provided parameters.
 
