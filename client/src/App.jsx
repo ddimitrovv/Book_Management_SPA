@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Login from './components/Login';
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation/Navigation';
 import Logout from './components/Logout';
 import { AuthProvider } from './components/AuthProvider';
 import paths from './appPaths/paths'; 
@@ -18,6 +18,7 @@ import BookDelete from './components/BookDelete';
 import UserDelete from './components/UserDelete';
 import MyBooks from './components/MyBooks';
 import PrivateRoute from './components/PrivateRoute';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
             <Route path={paths.EditUser} element={<PrivateRoute element={<EditUser />} />} />
             <Route path={paths.DeleteUser} element={<PrivateRoute element={<UserDelete />} />} />
           </Routes>
+        <Footer />
       </AuthProvider>
     </div>
   );

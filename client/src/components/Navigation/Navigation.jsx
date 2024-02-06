@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
-import paths from '../appPaths/paths';
+import { useAuth } from '../AuthProvider';
+import paths from '../../appPaths/paths';
+import styles from './Navigation.module.css'
 
 const Navigation = () => {
   const { isAuthenticated } = useAuth();
   const isHomePage = window.location.pathname == '/';
   
   return (
-    <nav className='navigation'>
-      <ul role='list' className='nav-links'>
+    <nav className={styles.navigation}>
+      <ul role='list' className={styles.navLinks}>
         {!isAuthenticated ? (
           <>
             <li>

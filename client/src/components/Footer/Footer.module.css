@@ -1,0 +1,14 @@
+footer {
+    background-color: #4b4b4b4d;
+    color: black;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.65rem;
+}
+
+footer a {
+    color: #F85800;
+}
