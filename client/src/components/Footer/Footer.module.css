@@ -1,12 +1,19 @@
 footer {
-    background-color: #4b4b4b4d;
-    color: black;
+    background-color: #000000;
+    color: whitesmoke;
     height: 8rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
     font-size: 1.65rem;
+    position: absolute;
+    bottom: auto;
+    width: 100%;
+    box-shadow:
+        0 0 0.625rem 0.3125rem rgba(0, 0, 0, 0.5),
+        0 0 1.25rem 0.625rem rgba(128, 128, 128, 0.3),
+        0 0 1.875rem 0.9375rem rgba(192, 192, 192, 0.2);
 }
 
 footer a {

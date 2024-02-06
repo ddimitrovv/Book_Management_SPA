@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-bootstrap';
-import { useAuth } from './AuthProvider';
-import urls from '../appPaths/urls';
-import paths from '../appPaths/paths';
-import Card from './BookCard';
+import { useAuth } from '../AuthProvider';
+import urls from '../../appPaths/urls';
+import paths from '../../appPaths/paths';
+import Card from '../BookCard';
+import styles from './Home.module.css';
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
@@ -42,9 +43,12 @@ export default function Home() {
 
   return (
     <div>
-      <h1 className='welcome'>Welcome to BookManagement</h1>
-      <h2 className='wellcome-message'>Your Gateway to Knowledge and Imagination! Dive into the world of books, where every page holds a new adventure, and every story sparks the imagination. Discover, learn, and embark on a literary journey with us. Happy Reading!
-</h2>
+      <div className={styles.heroSection}>
+        <h1 className={styles.welcome}>Welcome to BookManagement</h1>
+        <h2 className={styles.welcomeMessage}>
+          Your Gateway to Knowledge and Imagination! Dive into the world of books, where every page holds a new adventure, and every story sparks the imagination. Discover, learn, and embark on a literary journey with us. Happy Reading!
+        </h2>
+      </div>
       <div>
         {data.books_by_genre && Object.keys(data.books_by_genre).length > 0 ? (
           <div className="scrollable-container">

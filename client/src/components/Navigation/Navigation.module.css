@@ -1,8 +1,8 @@
 .navigation {
     display: flex;
     padding: 20px;
-    background-color: #4b4b4b4d;
-    height: 5rem;
+    background-color:#000000;
+    height: 7rem;
 }
 
 .navLinks {
@@ -14,7 +14,7 @@
 
 .navLinks li,
 .navLinks li a {
-    color: #F85800;
+    color: whitesmoke;
     text-decoration: none;
     font-weight: 700;
     font-size: 1.5rem;

@@ -1,6 +1,7 @@
 body {
     background-color: #8080804d;
     height: 100dvh;
+    scrollbar-width: thin;
 }
 
 #root{
@@ -24,6 +25,9 @@ textarea {
 .scrollable-container {
     display: flex;
     flex-direction: column;
+    /* background: linear-gradient(to bottom, #1a1010, #2a1f1f, #666666, #2a1f1f, #1a1010); */
+    background: #1a1010;
+
 }
   
 .genre-section {
@@ -32,7 +36,7 @@ textarea {
   
 .book-row {
     display: flex;
-    gap: 16px;
+    gap: 3rem;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
@@ -59,6 +63,11 @@ color: #ccc;
 
 .genre-section h2 {
     margin: 16px;
+}
+
+.genre-section .books-genre {
+    background: linear-gradient(to bottom, #1a1010, #2a1f1f, #666666, #2a1f1f, #1a1010);
+    color: whitesmoke;
 }
 
 .welcome {

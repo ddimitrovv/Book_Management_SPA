@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import fetchAddBook from '../operations/fetchAddBook';
+import fetchAddBook from '../../operations/fetchAddBook';
 import { useNavigate } from 'react-router-dom';
 // import { useAuth } from './AuthProvider';
+import styles from './AddBook.module.css'
 
 
 const AddBook = () => {
@@ -20,8 +21,8 @@ const AddBook = () => {
   };
 
   return (
-    <div className='add-book-form'>
-      <div className='form'>
+    <div className={styles.addBookForm}>
+      <div className={styles.form}>
         <h2>Add Book</h2>
         <div>
           <label>Title:</label>
