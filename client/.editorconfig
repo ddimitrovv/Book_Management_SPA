@@ -1,5 +1,31 @@
+# Top-most EditorConfig file
 root = true
 
+# Set default charset
 [*]
+charset = utf-8
+
+# Indentation settings
+[*.js]
 indent_style = space
 indent_size = 2
+
+[*.py]
+indent_style = space
+indent_size = 4
+
+# Specify file-specific configurations
+[Makefile]
+indent_style = tab
+
+# End-of-line settings
+[*]
+end_of_line = lf
+
+# Trim trailing whitespaces
+[*.{js,py,html}]
+trim_trailing_whitespace = true
+
+# Insert a newline at the end of files
+[*.{js,py,html}]
+insert_final_newline = true
