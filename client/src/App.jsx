@@ -13,7 +13,7 @@ import Register from './components/Register';
 import UserDetails from './components/UserDetails';
 import EditUser from './components/EditUser';
 import AddBook from './components/AddBook/AddBook';
-import EditBook from './components/EditBook'
+import EditBook from './components/EditBook/EditBook'
 import BookDelete from './components/BookDelete';
 import UserDelete from './components/UserDelete';
 import MyBooks from './components/MyBooks';

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import urls from '../appPaths/urls';
-import paths from '../appPaths/paths';
+import urls from '../../appPaths/urls';
+import paths from '../../appPaths/paths';
 import { useNavigate, useParams } from 'react-router-dom';
+import styles from './EditBook.module.css';
 
 const EditBook = () => {
 
@@ -81,8 +82,8 @@ const EditBook = () => {
   
 
   return (
-    <div className='add-book-form'>
-      <div className='form'>
+    <div className={styles.editBookForm}>
+      <div className={styles.form}>
         <h2>Edit Book</h2>
         <div>
           <label>Title:</label>

@@ -1,17 +1,13 @@
-.addBookForm {
+.editBookForm {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 10%;
+  min-height: calc(100vh - 15rem);
 }
 
-.addBookForm {
-  margin-top: 0.75rem;
-}
-
-.addBookForm h2 {
-    margin-bottom: 10px;
+.editBookForm h2 {
+  margin-bottom: 10px;
 }
 
 .form {
@@ -26,19 +22,22 @@
     0 0 10px 5px rgba(0, 0, 0, 0.5),
     0 0 20px 10px rgba(128, 128, 128, 0.3),
     0 0 30px 15px rgba(192, 192, 192, 0.2);
+  height: auto;
+
 }
 
-.addBookForm div {
+.editBookForm div {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 8px;
+  height: fit-content;
 }
 
-.addBookForm input,
-.addBookForm textarea,
-.addBookForm select {
+.editBookForm input,
+.editBookForm textarea,
+.editBookForm select {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
@@ -46,7 +45,7 @@
   border-radius: 10px;
 }
 
-.addBookForm button {
+.editBookForm button {
   background-color: black;
   color: white;
   font-weight: 700;
@@ -55,22 +54,22 @@
   cursor: pointer;
 }
 
-.addBookForm .form {
+.editBookForm .form {
   margin-top: 1rem;
   height: 50%;
   width: 400px;
 }
 
-.addBookForm .form div {
+.editBookForm .form div {
   flex-direction: row;
   align-items: baseline;
   justify-content: space-between;
   width: 100%;
 }
 
-.addBookForm .form div input,
-.addBookForm .form div textarea,
-.addBookForm .form div select {
+.editBookForm .form div input,
+.editBookForm .form div textarea,
+.editBookForm .form div select {
   width: 60%;
   box-sizing: border-box;
 }

@@ -1,26 +1,26 @@
 .navigation {
-    display: flex;
-    padding: 20px;
-    background-color:#000000;
-    height: 7rem;
+  display: flex;
+  padding: 20px;
+  background-color:#000000;
+  height: 7rem;
 }
 
 .navLinks {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .navLinks li,
 .navLinks li a {
-    color: whitesmoke;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1.5rem;
+  color: whitesmoke;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.5rem;
 }
 
 .navLinks li a {
-    flex: 1;
-    text-align: center;
+  flex: 1;
+  text-align: center;
 }
