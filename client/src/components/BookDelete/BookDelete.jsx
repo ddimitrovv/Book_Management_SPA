@@ -2,6 +2,7 @@ import React from 'react';
 import urls from '../../appPaths/urls';
 import paths from '../../appPaths/paths';
 import { useNavigate, useParams } from 'react-router-dom';
+import styles from './BookDelete.module.css';
 
 const BookDelete = () => {
 
@@ -36,8 +37,8 @@ const BookDelete = () => {
   };
 
   return (
-    <div className='logout-form'>
-      <div className='form'>
+    <div className={styles.deleteBookForm}>
+      <div className={styles.form}>
         <h2>Are you sure you want to detele this book?</h2>
         <button onClick={handleDeleteBook}>Delete</button>
       </div>
