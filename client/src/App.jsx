@@ -10,12 +10,12 @@ import Home from './components/Home/Home';
 import BookListByStatus from './components/BookListByStatus/BookListByStatus';
 import BookDetails from './components/BookDetails/BookDetails';
 import Register from './components/Register';
-import UserDetails from './components/UserDetails';
+import UserDetails from './components/UserDetails/UserDetails';
 import EditUser from './components/EditUser';
 import AddBook from './components/AddBook/AddBook';
 import EditBook from './components/EditBook/EditBook'
 import BookDelete from './components/BookDelete/BookDelete';
-import UserDelete from './components/UserDelete';
+import UserDelete from './components/UserDelete/UserDelete';
 import MyBooks from './components/MyBooks/MyBooks';
 import PrivateRoute from './components/PrivateRoute';
 import Footer from './components/Footer/Footer';

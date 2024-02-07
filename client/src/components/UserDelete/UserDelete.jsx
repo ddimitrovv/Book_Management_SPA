@@ -1,8 +1,9 @@
 import React from 'react';
-import urls from '../appPaths/urls';
-import paths from '../appPaths/paths';
+import urls from '../../appPaths/urls';
+import paths from '../../appPaths/paths';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '../AuthProvider';
+import styles from './UserDelete.module.css';
 
 const UserDelete = () => {
 
@@ -38,8 +39,8 @@ const UserDelete = () => {
   };
 
   return (
-    <div className='logout-form'>
-      <div className='form'>
+    <div className={styles.userDeleteForm}>
+      <div className={styles.form}>
         <h2>Are you sure you want to detele your profile?</h2>
         <button onClick={handleDeleteUser}>Delete</button>
       </div>
