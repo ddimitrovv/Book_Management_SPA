@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './StarRating.module.css'
 
 const StarRating = ({ rating, onStarClick }) => {
   const [hoveredRating, setHoveredRating] = useState(null);
@@ -16,7 +17,7 @@ const StarRating = ({ rating, onStarClick }) => {
         <span
           id={i}
           key={i}
-          className={`star ${starType}`}
+          className={`${styles.star} ${styles[starType]}`}
           onClick={() => handleStarClick(i)}
           onMouseEnter={() => setHoveredRating(i)}
           onMouseLeave={() => setHoveredRating(null)}
@@ -29,7 +30,7 @@ const StarRating = ({ rating, onStarClick }) => {
     return stars;
   };
 
-  return <div className="star-rating">{renderStars()}</div>;
+  return <div className={styles.classRating}>{renderStars()}</div>;
 };
 
 export default StarRating;

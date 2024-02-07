@@ -1,0 +1,9 @@
+.star {
+  color: gold;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.star.empty {
+color: #ccc;
+}

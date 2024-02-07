@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import paths from '../../appPaths/paths';
 import urls from '../../appPaths/urls';
-import StarRating from '../StarRating';
+import StarRating from '../StarRating/StarRating';
 import rateBook from '../../operations/rateBook';
 import styles from './BookDetails.module.css'
 
