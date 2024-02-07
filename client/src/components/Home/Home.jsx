@@ -3,7 +3,7 @@ import { Carousel } from 'react-bootstrap';
 import { useAuth } from '../AuthProvider';
 import urls from '../../appPaths/urls';
 import paths from '../../appPaths/paths';
-import Card from '../BookCard';
+import Card from '../BookCard/BookCard';
 import styles from './Home.module.css';
 
 export default function Home() {
@@ -51,11 +51,11 @@ export default function Home() {
       </div>
       <div>
         {data.books_by_genre && Object.keys(data.books_by_genre).length > 0 ? (
-          <div className="scrollable-container">
+          <div className={styles.scrollableContainer}>
             {Object.entries(data.books_by_genre).map(([genre, books], index) => (
-              <div key={index} className="genre-section">
-                <h2 className='books-genre'>{genre}</h2>
-                <div className="book-row">
+              <div key={index} className={styles.genreSection}>
+                <h2 className={styles.booksGenre}>{genre}</h2>
+                <div className={styles.bookRow}>
                   {books.map((book, bookIndex) => (
                     <Card key={bookIndex} book={book} />
                   ))}

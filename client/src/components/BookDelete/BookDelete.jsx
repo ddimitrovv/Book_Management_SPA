@@ -1,6 +1,6 @@
 import React from 'react';
-import urls from '../appPaths/urls';
-import paths from '../appPaths/paths';
+import urls from '../../appPaths/urls';
+import paths from '../../appPaths/paths';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const BookDelete = () => {

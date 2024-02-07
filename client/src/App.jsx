@@ -7,16 +7,16 @@ import Logout from './components/Logout';
 import { AuthProvider } from './components/AuthProvider';
 import paths from './appPaths/paths'; 
 import Home from './components/Home/Home';
-import BookListByStatus from './components/BookListByStatus';
-import BookDetails from './components/BookDetails';
+import BookListByStatus from './components/BookListByStatus/BookListByStatus';
+import BookDetails from './components/BookDetails/BookDetails';
 import Register from './components/Register';
 import UserDetails from './components/UserDetails';
 import EditUser from './components/EditUser';
 import AddBook from './components/AddBook/AddBook';
 import EditBook from './components/EditBook/EditBook'
-import BookDelete from './components/BookDelete';
+import BookDelete from './components/BookDelete/BookDelete';
 import UserDelete from './components/UserDelete';
-import MyBooks from './components/MyBooks';
+import MyBooks from './components/MyBooks/MyBooks';
 import PrivateRoute from './components/PrivateRoute';
 import Footer from './components/Footer/Footer';
 

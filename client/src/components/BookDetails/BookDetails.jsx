@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import paths from '../appPaths/paths';
-import urls from '../appPaths/urls';
-import StarRating from './StarRating';
-import rateBook from '../operations/rateBook';
+import paths from '../../appPaths/paths';
+import urls from '../../appPaths/urls';
+import StarRating from '../StarRating';
+import rateBook from '../../operations/rateBook';
+import styles from './BookDetails.module.css'
 
 export default function BookDetails() {
   const { id } = useParams();
@@ -51,13 +52,13 @@ export default function BookDetails() {
   };
 
   return (
-    <div className='book-details-container'>
-      <div className="book-details-buttons">
-        <div className="book-details">
-          <div className="book-details-header">
+    <div className={styles.bookDetailsContainer}>
+      <div className={styles.bookDetailsButtons}>
+        <div className={styles.bookDetails}>
+          <div className={styles.bookDetailsHeader}>
             <h2>{bookDetails.name}</h2>
             <p>{bookDetails.author}</p>
-            <p className='description'>{bookDetails.description}</p>
+            <p className={styles.description}>{bookDetails.description}</p>
             <p>Price: {bookDetails.price}</p>
             {isUserAuth ? (
               <div><StarRating rating={userRating} onStarClick={handleStarClick}></StarRating></div>
@@ -66,8 +67,8 @@ export default function BookDetails() {
             )}
             <p>Rating: {bookDetails.average_rating.toFixed(2)} / 5.00</p>
           </div>
-          <div className="book-details-content">
-            <div className="profile-picture">
+          <div className={styles.bookDetailsContent}>
+            <div className={styles.bookDetailsPicture}>
               {bookDetails.picture ? (
                 <img src={bookDetails.picture} alt={`Book Cover`} />
               ) : (
@@ -77,17 +78,17 @@ export default function BookDetails() {
           </div>
         </div>
         {bookDetails.status && (
-          <div className='book-buttons'>
-            <button className='edit-book-button'>
+          <div className={styles.bookButtons}>
+            <button className={styles.editBookButton}>
               <Link to={paths.BookEdit(id)}>Edit</Link>
             </button>
-            <button className='delete-book-button'>
+            <button className={styles.deleteBookButton}>
               <Link to={paths.BookDelete(id)}>Delete</Link>
             </button>
           </div>
         )}
       </div>
-      <div className="book-details-footer">
+      <div className={styles.bookDetailsFooter}>
         <button><Link to={paths.Home}>Back to List</Link></button>
       </div>
     </div>

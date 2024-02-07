@@ -1,0 +1,24 @@
+.bookList {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 5%;
+  flex-wrap: wrap;
+  gap: 3rem;
+  height: calc(100% - 15rem);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 2%;
+}
+
+.pagination button {
+  background-color: #808080f1;
+  font-weight: 600;
+  border-radius: 45%;
+  width: 6%;
+  cursor: pointer;
+}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import urls from '../appPaths/urls';
-import BookCard from './BookCard';
+import urls from '../../appPaths/urls';
+import BookCard from '../BookCard/BookCard';
+import styles from './BookListByStatus.module.css';
 
 export default function BookListByStatus() {
 
@@ -82,13 +83,13 @@ export default function BookListByStatus() {
 
   return (
     <>
-      <div className="book-list">
+      <div className={styles.bookList}>
         {books.map((book) => (
           <BookCard key={book.id} book={book} />
         ))}
       </div>
       {pagination.previous || pagination.next ? (
-        <div className="pagination">
+        <div className={styles.pagination}>
           <button
             onClick={() => handlePaginationClick(pagination.previous)}
             disabled={!pagination.previous}

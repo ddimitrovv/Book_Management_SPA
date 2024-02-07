@@ -26,3 +26,36 @@
   width: 50%;
   text-align: center;
 }
+
+.scrollableContainer {
+  display: flex;
+  flex-direction: column;
+  background: #1a1010;
+}
+
+.genreSection {
+  margin-bottom: 16px;
+}
+
+.genreSection h2 {
+  margin: 16px;
+}
+
+.genreSection .booksGenre {
+  background: linear-gradient(to bottom, #1a1010, #2a1f1f, #666666, #2a1f1f, #1a1010);
+  color: whitesmoke;
+}
+
+.booksGenre {
+  text-align: center;
+}
+
+.bookRow {
+  display: flex;
+  gap: 3rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #888888 #f0f0f0;
+  padding: 14px;
+}
