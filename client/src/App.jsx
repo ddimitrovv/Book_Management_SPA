@@ -11,7 +11,7 @@ import BookListByStatus from './components/BookListByStatus/BookListByStatus';
 import BookDetails from './components/BookDetails/BookDetails';
 import Register from './components/Register/Register';
 import UserDetails from './components/UserDetails/UserDetails';
-import EditUser from './components/EditUser';
+import EditUser from './components/UserEdit/UserEdit';
 import AddBook from './components/AddBook/AddBook';
 import EditBook from './components/EditBook/EditBook'
 import BookDelete from './components/BookDelete/BookDelete';

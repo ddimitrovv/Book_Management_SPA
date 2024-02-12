@@ -103,4 +103,6 @@
   text-decoration: none;
   font-weight: 800;
   color: black;
+  display: inline-block;
+  width: 100%;
 }

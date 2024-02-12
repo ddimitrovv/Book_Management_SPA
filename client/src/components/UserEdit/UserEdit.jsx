@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import urls from '../appPaths/urls';
-import paths from '../appPaths/paths';
+import urls from '../../appPaths/urls';
+import paths from '../../appPaths/paths';
 import { useNavigate } from 'react-router-dom';
+import styles from './UserEdit.module.css';
 
 const EditUser = () => {
 
@@ -76,17 +77,17 @@ const EditUser = () => {
   
 
   return (
-    <div className='user-details-wrapper add-book-form'>
-        <div className="user-details">
-            <div className="profile-picture">
+    <div className={styles['user-details-wrapper','edit-user-form']}>
+        <div className={styles['user-details']}>
+            <div className={styles['profile-picture']}>
                 {profilePicture ? (
                 <img src={profilePicture} alt={`Profile Picture`} />
                 ) : (
                 <img src="https://as2.ftcdn.net/v2/jpg/00/64/67/63/1000_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="Book Cover" />
                 )}
             </div>
-            <div className="edit-user">
-                <div className='form'>
+            <div className={styles['edit-user']}>
+                <div className={styles.form}>
                 <div>
                   <label>Profile Picture:</label>
                   <input
@@ -144,7 +145,7 @@ const EditUser = () => {
                 </div>
                 </div>
             </div>
-            <div className='edit-user-buttons'>
+            <div className={styles['edit-user-buttons']}>
                 <button onClick={handleSubmit}>
                     Save Changes
                 </button>
