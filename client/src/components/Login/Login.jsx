@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '../AuthProvider';
+import styles from './Login.module.css';
 
 const Login = () => {
   const { login } = useAuth();
@@ -13,8 +14,8 @@ const Login = () => {
   };
 
   return (
-    <div className='login-form'>
-      <div className='form'>
+    <div className={styles['login-form']}>
+      <div className={styles.form}>
         <h2>Login</h2>
         <div>
           <label>Username:</label>

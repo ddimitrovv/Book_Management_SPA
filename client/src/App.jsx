@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import Navigation from './components/Navigation/Navigation';
-import Logout from './components/Logout';
+import Logout from './components/Logout/Logout';
 import { AuthProvider } from './components/AuthProvider';
 import paths from './appPaths/paths'; 
 import Home from './components/Home/Home';
 import BookListByStatus from './components/BookListByStatus/BookListByStatus';
 import BookDetails from './components/BookDetails/BookDetails';
-import Register from './components/Register';
+import Register from './components/Register/Register';
 import UserDetails from './components/UserDetails/UserDetails';
 import EditUser from './components/EditUser';
 import AddBook from './components/AddBook/AddBook';

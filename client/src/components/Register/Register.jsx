@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '../AuthProvider';
+import styles from './Register.module.css';
 
 const Register = () => {
   const { register } = useAuth();
@@ -23,8 +24,8 @@ const Register = () => {
   };
 
   return (
-    <div className='register-form'>
-      <div className='form'>
+    <div className={styles['register-form']}>
+      <div className={styles.form}>
         <h2>Register</h2>
         <div>
           <label>Username:</label>
